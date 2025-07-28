@@ -8,7 +8,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { getRandomChord } from "@/lib/chord-data";
 import { type Session, type ChordData } from "@shared/schema";
-import { X, Check, Volume2 } from "lucide-react";
+import { X, Circle, Play } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { audioEngine } from "@/lib/audio-engine";
 
@@ -124,8 +124,7 @@ export default function Practice({ params }: PracticeProps) {
       <div className="max-w-md mx-auto w-full h-full flex flex-col">
         {/* Progress Header */}
         <div className="text-center py-4">
-          <div className="text-lg font-medium text-gray-600 mb-2">進行状況</div>
-          <div className="text-3xl font-bold text-blue-600">
+          <div className="text-3xl font-mono font-bold text-gray-900">
             {session.currentRound}/{session.totalRounds}
           </div>
         </div>
@@ -134,34 +133,33 @@ export default function Practice({ params }: PracticeProps) {
         <div className="flex-1 flex flex-col justify-center items-center space-y-8">
           {/* Color Flag */}
           <div className="text-center">
-            <div className="text-lg font-medium text-gray-700 mb-4">この色の和音は？</div>
             <div className="flex flex-col items-center space-y-4">
-              <ChordFlag color={currentChord.color} size="large" className="mx-auto" />
-              <Button
-                onClick={() => playChordSound(currentChord)}
-                variant="outline"
-                size="sm"
-                className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
-              >
-                <Volume2 className="w-4 h-4" />
-                <span>音を聞く</span>
-              </Button>
+              <div className="w-16 h-16 rounded-full shadow-lg" style={{ backgroundColor: currentChord.color }}></div>
             </div>
           </div>
 
-          {/* Chord Name */}
-          <Card>
-            <CardContent className="p-8 text-center">
-              <div className="text-4xl font-bold text-gray-900 mb-4">
-                {currentChord.japaneseName}
-              </div>
-              
-              {/* Staff Notation */}
-              <div className="mb-2">
-                <StaffNotation chord={currentChord} className="h-20" />
-              </div>
-            </CardContent>
-          </Card>
+          {/* Chord Content */}
+          <div className="text-center">
+            <div className="text-4xl font-bold text-gray-900 mb-4">
+              {currentChord.japaneseName}
+            </div>
+            
+            {/* Staff Notation */}
+            <div className="mb-4">
+              <StaffNotation chord={currentChord} className="h-20" />
+            </div>
+            
+            {/* Play Button */}
+            <Button
+              onClick={() => playChordSound(currentChord)}
+              variant="outline"
+              size="sm"
+              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+            >
+              <Play className="w-4 h-4" />
+              <span>リプレイ</span>
+            </Button>
+          </div>
 
           {/* Answer Buttons */}
           <div className="w-full px-4">
@@ -169,17 +167,17 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-red-500 hover:bg-red-600 text-white font-bold py-8 px-4 rounded-2xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-8 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
               >
-                <X className="w-8 h-8 mb-2" />
+                <X className="w-16 h-16 mb-2" />
                 <span className="text-base">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-green-500 hover:bg-green-600 text-white font-bold py-8 px-4 rounded-2xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-8 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
               >
-                <Check className="w-8 h-8 mb-2" />
+                <Circle className="w-16 h-16 mb-2" />
                 <span className="text-base">せいかい</span>
               </Button>
             </div>

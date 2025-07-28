@@ -49,10 +49,9 @@ export function generateStaffNotation(chord: ChordData): string {
       renderer.resize(100, 120);
       const context = renderer.getContext();
 
-      // Create ultra-minimal staff with treble clef, no end bar
+      // Create ultra-minimal staff with treble clef
       const stave = new Stave(10, 15, 80);
       stave.addClef("treble");
-      stave.setEndBarType(0); // Remove end bar line
       stave.setContext(context).draw();
 
       // Convert chord notes to VexFlow notation (use original octaves from chord data)

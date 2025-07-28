@@ -61,19 +61,18 @@ export default function Results({ params }: ResultsProps) {
 
         {/* Results Summary */}
         <Card className="mb-6">
-          <CardContent className="p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">詳細結果</h2>
-            <div className="space-y-3">
+          <CardContent className="p-4">
+            <div className="space-y-2">
               {results.map((result: ChordResult, index) => (
-                <div key={index} className="flex items-center p-3 border border-gray-200 rounded-lg">
-                  <div className="w-8 h-8 flex items-center justify-center mr-3">
+                <div key={index} className="flex items-center py-2">
+                  <div className="w-6 h-6 flex items-center justify-center mr-3">
                     {result.isCorrect ? (
-                      <Check className="w-5 h-5 text-green-500" />
+                      <Check className="w-4 h-4 text-green-500" />
                     ) : (
-                      <X className="w-5 h-5 text-red-500" />
+                      <X className="w-4 h-4 text-red-500" />
                     )}
                   </div>
-                  <ChordFlag color={result.color} className="mr-3" />
+                  <div className="w-8 h-8 rounded-full mr-3" style={{ backgroundColor: result.color }}></div>
                   <div className="flex-1">
                     <div className="font-medium text-gray-900">{result.chordName}</div>
                   </div>
@@ -86,21 +85,16 @@ export default function Results({ params }: ResultsProps) {
           </CardContent>
         </Card>
 
-        {/* Action Buttons */}
-        <div className="space-y-3">
-          <Button 
-            onClick={restartTraining}
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl text-lg transition-colors"
-          >
-            もう一度練習
-          </Button>
-          <Button 
-            onClick={returnHome}
-            variant="secondary"
-            className="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-4 px-6 rounded-xl text-lg transition-colors"
-          >
-            ホームに戻る
-          </Button>
+        {/* Fixed Bottom Button */}
+        <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
+          <div className="max-w-md mx-auto">
+            <Button 
+              onClick={returnHome}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl text-lg transition-colors"
+            >
+              ホームに戻る
+            </Button>
+          </div>
         </div>
       </div>
     </div>
