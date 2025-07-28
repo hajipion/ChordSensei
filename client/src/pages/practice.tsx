@@ -149,7 +149,7 @@ export default function Practice({ params }: PracticeProps) {
 
             {/* Chord Content */}
             <div className="text-center">
-              <div className="text-5xl font-mono font-bold text-gray-900 mb-3">
+              <div className="text-5xl font-mono font-bold text-gray-900 mb-3 tracking-widest">
                 {currentChord.japaneseName}
               </div>
               
@@ -166,7 +166,7 @@ export default function Practice({ params }: PracticeProps) {
             {audioEnabled && (
               <Button
                 onClick={() => playChordSound(currentChord)}
-                className="w-full bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-4 rounded-lg transition-colors flex items-center justify-center border-2 border-gray-900 min-h-[90px]"
+                className="w-full bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-3 px-4 rounded-lg transition-colors flex items-center justify-center border-2 border-gray-900 min-h-[45px]"
               >
                 <Play className="w-6 h-6 mr-2" />
                 <span>リプレイ</span>
@@ -178,18 +178,18 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[90px]"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-8 px-2 rounded-lg transition-colors flex items-center justify-center border-2 border-gray-900 min-h-[135px] gap-1"
               >
-                <div className="text-6xl leading-none mb-1">✕</div>
-                <span className="text-sm">まちがい</span>
+                <div className="text-8xl leading-none">✕</div>
+                <span className="text-lg">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[90px]"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-8 px-2 rounded-lg transition-colors flex items-center justify-center border-2 border-gray-900 min-h-[135px] gap-1"
               >
-                <div className="text-6xl leading-none mb-1">○</div>
-                <span className="text-sm">せいかい</span>
+                <div className="text-8xl leading-none">○</div>
+                <span className="text-lg">せいかい</span>
               </Button>
             </div>
           </div>

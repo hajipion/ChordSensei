@@ -116,6 +116,11 @@ export default function Home() {
   return (
     <div className="min-h-screen p-4 flex flex-col bg-white">
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
+        
+        {/* Title */}
+        <div className="text-center py-6">
+          <h1 className="text-3xl font-mono font-bold text-gray-900">絶対音感トレーニング</h1>
+        </div>
 
         {/* Chord Selection */}
         <div className="mb-6">
@@ -170,24 +175,26 @@ export default function Home() {
           <div className="flex-1">
             <div className="flex bg-gray-200 rounded-lg p-1">
               <button
-                onClick={() => setAudioEnabled(false)}
-                className={`flex-1 px-3 py-2 rounded-md text-sm font-mono transition-colors ${
-                  !audioEnabled 
-                    ? "bg-white text-gray-900 shadow-sm" 
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                流さない
-              </button>
-              <button
                 onClick={() => setAudioEnabled(true)}
-                className={`flex-1 px-3 py-2 rounded-md text-sm font-mono transition-colors ${
+                className={`flex-1 px-2 py-2 rounded-md text-sm font-mono transition-colors flex items-center justify-center gap-1 ${
                   audioEnabled 
                     ? "bg-white text-gray-900 shadow-sm" 
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
-                流す
+                <span>🔊</span>
+                <span>音あり</span>
+              </button>
+              <button
+                onClick={() => setAudioEnabled(false)}
+                className={`flex-1 px-2 py-2 rounded-md text-sm font-mono transition-colors flex items-center justify-center gap-1 ${
+                  !audioEnabled 
+                    ? "bg-white text-gray-900 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                <span>🔇</span>
+                <span>音なし</span>
               </button>
             </div>
           </div>
