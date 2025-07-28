@@ -157,11 +157,9 @@ export default function Practice({ params }: PracticeProps) {
               </div>
               
               {/* Staff Notation */}
-              <div className="mb-4">
-                <StaffNotation chord={currentChord} className="h-20" />
+              <div className="mb-2">
+                <StaffNotation chord={currentChord} className="h-16" />
               </div>
-              
-              <div className="text-sm text-gray-500">五線譜上での表示</div>
             </CardContent>
           </Card>
 

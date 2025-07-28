@@ -44,13 +44,13 @@ export function generateStaffNotation(chord: ChordData): string {
       // Use native VexFlow API without font loading (uses default fonts)
       const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = VF;
 
-      // Create VexFlow renderer using low-level API
+      // Create VexFlow renderer using low-level API with compact size
       const renderer = new Renderer(container, Renderer.Backends.SVG);
-      renderer.resize(350, 120);
+      renderer.resize(250, 100);
       const context = renderer.getContext();
 
-      // Create staff with treble clef
-      const stave = new Stave(10, 10, 300);
+      // Create compact staff with treble clef, centered
+      const stave = new Stave(30, 10, 180);
       stave.addClef("treble");
       stave.setContext(context).draw();
 
@@ -59,7 +59,7 @@ export function generateStaffNotation(chord: ChordData): string {
         return convertNoteToVexFlow(note);
       });
 
-      console.log("VexFlow notes:", vexFlowNotes); // Debug log
+
       
       // Create a single chord note (all notes played simultaneously)
       const chordNote = new StaveNote({
@@ -72,8 +72,8 @@ export function generateStaffNotation(chord: ChordData): string {
       const voice = new Voice({ num_beats: 4, beat_value: 4 });
       voice.addTickables([chordNote]);
 
-      // Format and draw
-      const formatter = new Formatter().joinVoices([voice]).format([voice], 280);
+      // Format and draw with compact spacing
+      const formatter = new Formatter().joinVoices([voice]).format([voice], 140);
       voice.draw(context, stave);
       
     } catch (error) {
@@ -84,5 +84,5 @@ export function generateStaffNotation(chord: ChordData): string {
     }
   }, 0);
 
-  return `<div id="${containerId}" class="w-full h-20 flex items-center justify-center bg-white border border-gray-200 rounded"></div>`;
+  return `<div id="${containerId}" class="w-full h-16 flex items-center justify-center"></div>`;
 }
