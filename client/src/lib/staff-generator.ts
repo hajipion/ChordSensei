@@ -1,85 +1,93 @@
 import { type ChordData } from "@shared/schema";
-import abcjs from "abcjs";
+import Vex from "vexflow";
 
-// Note name mapping from chord notation to ABC notation
-const noteToABC: Record<string, string> = {
-  'C': 'C',
-  'D': 'D', 
-  'E': 'E',
-  'F': 'F',
-  'G': 'G',
-  'A': 'A',
-  'B': 'B',
-  'C#': '^C',
-  'D#': '^D',
-  'F#': '^F',
-  'G#': '^G',
-  'A#': '^A',
-  'Bb': '_B',
-  'Eb': '_E',
-  'Db': '_D',
-  'Gb': '_G',
-  'Ab': '_A'
+// Note name mapping from chord notation to VexFlow notation
+const noteToVexFlow: Record<string, string> = {
+  'C': 'c',
+  'D': 'd', 
+  'E': 'e',
+  'F': 'f',
+  'G': 'g',
+  'A': 'a',
+  'B': 'b',
+  'C#': 'c#',
+  'D#': 'd#',
+  'F#': 'f#',
+  'G#': 'g#',
+  'A#': 'a#',
+  'Bb': 'bb',
+  'Eb': 'eb',
+  'Db': 'db',
+  'Gb': 'gb',
+  'Ab': 'ab'
 };
 
-// Convert note name to proper ABC notation with octave
-function convertNoteToABC(noteStr: string, octave: number = 4): string {
-  const baseNote = noteToABC[noteStr] || noteStr.charAt(0);
-  
-  // ABC octave notation: lowercase = octave 4, uppercase = octave 5, etc.
-  if (octave <= 3) {
-    return baseNote.toUpperCase() + ','.repeat(4 - octave);
-  } else if (octave === 4) {
-    return baseNote.toUpperCase();
-  } else if (octave === 5) {
-    return baseNote.toLowerCase();
-  } else {
-    return baseNote.toLowerCase() + "'".repeat(octave - 5);
-  }
+// Convert note name to proper VexFlow notation with octave
+function convertNoteToVexFlow(noteStr: string, octave: number = 4): string {
+  const baseNote = noteToVexFlow[noteStr] || noteStr.charAt(0).toLowerCase();
+  return `${baseNote}/${octave}`;
 }
 
 export function generateStaffNotation(chord: ChordData): string {
   // Create a unique container ID for this chord
   const containerId = `staff-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
   
-  // Convert chord notes to ABC notation with proper octave assignment
-  const abcNotes = chord.notes.map((note, index) => {
-    // Assign different octaves for chord voicing (low to high)
-    const octave = index === 0 ? 3 : index === 1 ? 4 : 5;
-    return convertNoteToABC(note, octave);
-  });
-
-  // Create ABC notation for a chord (notes in brackets played simultaneously)
-  const abcNotation = `
-X:1
-T:${chord.japaneseName}
-K:C
-L:1/4
-[${abcNotes.join('')}]
-`;
-
-  // Create container div for abcjs to render into
+  // Render VexFlow notation asynchronously
   setTimeout(() => {
     const container = document.getElementById(containerId);
-    if (container) {
+    if (!container) return;
+    
+    try {
       // Clear any existing content
       container.innerHTML = '';
       
-      // Render using abcjs with optimized settings for chord display
-      abcjs.renderAbc(containerId, abcNotation, {
-        responsive: "resize",
-        scale: 1.2,
-        staffwidth: 300,
-        add_classes: true,
-        clickListener: undefined,
-        format: {
-          titlefont: "serif 12",
-          gchordfont: "serif 10",
-          vocalfont: "serif 10"
+      // Create VexFlow renderer
+      const renderer = new Vex.Flow.Renderer(container, Vex.Flow.Renderer.Backends.SVG);
+      renderer.resize(350, 120);
+      const context = renderer.getContext();
+      
+      // Create staff with treble clef
+      const stave = new Vex.Flow.Stave(10, 10, 300);
+      stave.addClef("treble");
+      stave.setContext(context).draw();
+      
+      // Convert chord notes to VexFlow notation with proper octave assignment
+      const vexFlowNotes = chord.notes.map((note, index) => {
+        // Assign different octaves for chord voicing (low to high)
+        const octave = index === 0 ? 3 : index === 1 ? 4 : 5;
+        return convertNoteToVexFlow(note, octave);
+      });
+      
+      // Create a single chord note (all notes played simultaneously)
+      const chordNote = new Vex.Flow.StaveNote({
+        clef: "treble", 
+        keys: vexFlowNotes, 
+        duration: "w" // whole note
+      });
+      
+      // Add accidentals if needed
+      chord.notes.forEach((note, index) => {
+        if (note.includes('#')) {
+          chordNote.addAccidental(index, new Vex.Flow.Accidental('#'));
+        } else if (note.includes('b')) {
+          chordNote.addAccidental(index, new Vex.Flow.Accidental('b'));
         }
       });
+      
+      // Create voice and add the chord
+      const voice = new Vex.Flow.Voice({num_beats: 4, beat_value: 4});
+      voice.addTickables([chordNote]);
+      
+      // Format and draw
+      const formatter = new Vex.Flow.Formatter().joinVoices([voice]).format([voice], 280);
+      voice.draw(context, stave);
+      
+    } catch (error) {
+      console.error("VexFlow rendering error:", error);
+      // Fallback to simple text display
+      container.innerHTML = `<div class="text-center py-4">${chord.japaneseName}</div>`;
     }
   }, 0);
 
-  return `<div id="${containerId}" class="w-full h-20 flex items-center justify-center"></div>`;
+  return `<div id="${containerId}" class="w-full h-20 flex items-center justify-center bg-white"></div>`;
 }
