@@ -141,7 +141,7 @@ export default function Practice({ params }: PracticeProps) {
         {/* Main Content Area */}
         <div className="flex-1 flex flex-col justify-between px-4 py-4">
           {/* Top Section */}
-          <div className="flex-1 flex flex-col justify-center items-center space-y-4">
+          <div className="flex-1 flex flex-col justify-center items-center space-y-6">
             {/* Color Flag */}
             <div className="flex justify-center">
               <div className="w-20 h-20 rounded-full" style={{ backgroundColor: currentChord.color }}></div>
@@ -149,14 +149,14 @@ export default function Practice({ params }: PracticeProps) {
 
             {/* Chord Content */}
             <div className="text-center">
-              <div className="text-5xl font-mono font-bold text-gray-900 mb-2">
+              <div className="text-5xl font-mono font-bold text-gray-900">
                 {currentChord.japaneseName}
               </div>
-              
-              {/* Staff Notation */}
-              <div>
-                <StaffNotation chord={currentChord} className="h-24" />
-              </div>
+            </div>
+            
+            {/* Staff Notation */}
+            <div>
+              <StaffNotation chord={currentChord} className="h-24" />
             </div>
           </div>
 
@@ -166,7 +166,7 @@ export default function Practice({ params }: PracticeProps) {
             {audioEnabled && (
               <Button
                 onClick={() => playChordSound(currentChord)}
-                className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center border border-gray-900"
+                className="w-full bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center border-2 border-gray-900 min-h-[60px]"
               >
                 <Play className="w-6 h-6 mr-2" />
                 <span>リプレイ</span>
@@ -178,18 +178,18 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[100px]"
+                className="bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[60px]"
               >
-                <div className="text-6xl leading-none">✕</div>
-                <span className="text-xs mt-1">まちがい</span>
+                <div className="text-4xl leading-none mb-1">✕</div>
+                <span className="text-xs">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[100px]"
+                className="bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[60px]"
               >
-                <div className="text-6xl leading-none">○</div>
-                <span className="text-xs mt-1">せいかい</span>
+                <div className="text-4xl leading-none mb-1">○</div>
+                <span className="text-xs">せいかい</span>
               </Button>
             </div>
           </div>

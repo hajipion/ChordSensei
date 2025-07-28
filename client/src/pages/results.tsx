@@ -50,7 +50,7 @@ export default function Results({ params }: ResultsProps) {
       <div className="max-w-md mx-auto w-full pb-24">
         {/* Header */}
         <div className="text-center py-6">
-          <h1 className="text-3xl font-mono font-bold text-gray-900 mb-6">結果</h1>
+          <h1 className="text-3xl font-mono font-bold text-gray-900 mb-4">結果</h1>
           <div className="text-6xl font-mono font-bold text-green-600 mb-2">
             {correctAnswers}/{session.totalRounds}
           </div>

@@ -119,71 +119,29 @@ export default function Home() {
 
         {/* Chord Selection */}
         <div className="mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-mono font-bold text-gray-900">和音</h2>
-            <Button
-              onClick={toggleAllChords}
-              variant="outline"
-              size="sm"
-              className="text-sm bg-white border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
-            >
-              {selectedChords.length === chordData.length ? "すべて解除" : "すべて選択"}
-            </Button>
-          </div>
           <div className="grid grid-cols-2 gap-2">
             {chordData.map((chord) => (
               <div
                 key={chord.japaneseName}
-                className="flex items-center p-3 cursor-pointer hover:bg-gray-50 transition-colors"
+                className={`flex items-center p-3 cursor-pointer rounded-lg border-2 transition-colors ${
+                  selectedChords.includes(chord.japaneseName)
+                    ? "bg-blue-50 border-blue-500 text-blue-900"
+                    : "bg-white border-gray-300 hover:bg-gray-50"
+                }`}
                 onClick={() => toggleChordSelection(chord.japaneseName)}
               >
-                <div className="mr-2">
-                  <Checkbox 
-                    checked={selectedChords.includes(chord.japaneseName)}
-                    onChange={() => {}}
-                  />
-                </div>
-                <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: chord.color }}></div>
+                <div className="w-4 h-4 rounded-full mr-3" style={{ backgroundColor: chord.color }}></div>
                 <span className="font-mono text-sm">{chord.japaneseName}</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Audio Settings */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-mono font-bold text-gray-900">音楽</h2>
-            <div className="flex bg-gray-200 rounded-lg p-1">
-              <button
-                onClick={() => setAudioEnabled(false)}
-                className={`px-4 py-2 rounded-md text-sm font-mono transition-colors ${
-                  !audioEnabled 
-                    ? "bg-white text-gray-900 shadow-sm" 
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                流さない
-              </button>
-              <button
-                onClick={() => setAudioEnabled(true)}
-                className={`px-4 py-2 rounded-md text-sm font-mono transition-colors ${
-                  audioEnabled 
-                    ? "bg-white text-gray-900 shadow-sm" 
-                    : "text-gray-600 hover:text-gray-900"
-                }`}
-              >
-                流す
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Round Selection */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-mono font-bold text-gray-900">回数</h2>
-            <div className="flex items-center space-x-3">
+        {/* Controls Row */}
+        <div className="mb-8 flex gap-4">
+          {/* Round Selection */}
+          <div className="flex-1">
+            <div className="flex items-center justify-center space-x-3">
               <Button
                 variant="outline"
                 size="icon"
@@ -207,13 +165,39 @@ export default function Home() {
               </Button>
             </div>
           </div>
+
+          {/* Audio Settings */}
+          <div className="flex-1">
+            <div className="flex bg-gray-200 rounded-lg p-1">
+              <button
+                onClick={() => setAudioEnabled(false)}
+                className={`flex-1 px-3 py-2 rounded-md text-sm font-mono transition-colors ${
+                  !audioEnabled 
+                    ? "bg-white text-gray-900 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                流さない
+              </button>
+              <button
+                onClick={() => setAudioEnabled(true)}
+                className={`flex-1 px-3 py-2 rounded-md text-sm font-mono transition-colors ${
+                  audioEnabled 
+                    ? "bg-white text-gray-900 shadow-sm" 
+                    : "text-gray-600 hover:text-gray-900"
+                }`}
+              >
+                流す
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Start Button */}
         <Button 
           onClick={startTraining}
           disabled={createSessionMutation.isPending}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-6 px-6 rounded-lg text-xl transition-colors tracking-wider"
+          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-9 px-6 rounded-lg text-xl transition-colors tracking-wider"
         >
           {createSessionMutation.isPending ? "準備中..." : "トレーニング開始"}
         </Button>
