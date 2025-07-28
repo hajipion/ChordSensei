@@ -76,6 +76,11 @@ Preferred communication style: Simple, everyday language.
 - **ESBuild**: Fast bundling for production builds
 - **TSX**: TypeScript execution for development server
 
+### Audio
+- **Tone.js**: Web Audio API framework for realistic piano sound synthesis
+- **Audio Engine**: Custom implementation with effects chain (chorus, EQ, compressor, reverb)
+- **Chord Playback**: Automatic and manual chord sound generation during practice
+
 ## Deployment Strategy
 
 ### Development

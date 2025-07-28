@@ -8,8 +8,9 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { getRandomChord } from "@/lib/chord-data";
 import { type Session, type ChordData } from "@shared/schema";
-import { X, Check } from "lucide-react";
+import { X, Check, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { audioEngine } from "@/lib/audio-engine";
 
 interface PracticeProps {
   params: { sessionId: string };
@@ -73,6 +74,13 @@ export default function Practice({ params }: PracticeProps) {
       : [];
     const nextChord = getRandomChord(availableChords);
     setCurrentChord(nextChord || null);
+    
+    // Play chord sound automatically when a new chord is generated
+    if (nextChord) {
+      setTimeout(() => {
+        playChordSound(nextChord);
+      }, 500); // Small delay to let UI settle
+    }
   };
 
   useEffect(() => {
@@ -80,6 +88,15 @@ export default function Practice({ params }: PracticeProps) {
       generateNextChord(session);
     }
   }, [session, currentChord]);
+
+  const playChordSound = async (chord: ChordData) => {
+    try {
+      await audioEngine.initialize();
+      await audioEngine.playChord(chord.notes, "1n");
+    } catch (error) {
+      console.error("Failed to play chord sound:", error);
+    }
+  };
 
   const handleAnswer = (isCorrect: boolean) => {
     answerMutation.mutate(isCorrect);
@@ -117,7 +134,18 @@ export default function Practice({ params }: PracticeProps) {
           {/* Color Flag */}
           <div className="text-center">
             <div className="text-lg font-medium text-gray-700 mb-4">この色の和音は？</div>
-            <ChordFlag color={currentChord.color} size="large" className="mx-auto" />
+            <div className="flex flex-col items-center space-y-4">
+              <ChordFlag color={currentChord.color} size="large" className="mx-auto" />
+              <Button
+                onClick={() => playChordSound(currentChord)}
+                variant="outline"
+                size="sm"
+                className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+              >
+                <Volume2 className="w-4 h-4" />
+                <span>音を聞く</span>
+              </Button>
+            </div>
           </div>
 
           {/* Chord Name */}
