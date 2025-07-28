@@ -11,52 +11,18 @@ export class AudioEngine {
       // Start Tone.js audio context
       await Tone.start();
       
-      // Create a more realistic piano synthesizer
+      // Create a simple, clean piano synthesizer
       this.synth = new Tone.PolySynth(Tone.Synth, {
         oscillator: {
-          type: "fatsawtooth",
-          count: 3,
-          spread: 30,
+          type: "sine",
         },
         envelope: {
           attack: 0.01,
-          decay: 0.3,
-          sustain: 0.4,
-          release: 2.0,
+          decay: 0.2,
+          sustain: 0.1,
+          release: 0.8,
         },
-      });
-
-      // Create effect chain for more realistic piano sound
-      const chorus = new Tone.Chorus({
-        frequency: 4,
-        delayTime: 2.5,
-        depth: 0.5,
-        wet: 0.2,
-      }).start();
-
-      const reverb = new Tone.Reverb({
-        decay: 2.0,
-        wet: 0.4,
-        preDelay: 0.01,
-      });
-
-      const compressor = new Tone.Compressor({
-        threshold: -20,
-        ratio: 8,
-        attack: 0.01,
-        release: 0.1,
-      });
-
-      const eq = new Tone.EQ3({
-        low: -2,
-        mid: 3,
-        high: 1,
-        lowFrequency: 300,
-        highFrequency: 3000,
-      });
-
-      // Chain effects: synth -> chorus -> eq -> compressor -> reverb -> destination
-      this.synth.chain(chorus, eq, compressor, reverb, Tone.Destination);
+      }).toDestination();
 
       this.isInitialized = true;
     } catch (error) {
@@ -64,7 +30,7 @@ export class AudioEngine {
     }
   }
 
-  async playChord(notes: string[], duration: string = "2n") {
+  async playChord(notes: string[], duration: string = "1s") {
     if (!this.synth || !this.isInitialized) {
       await this.initialize();
     }
