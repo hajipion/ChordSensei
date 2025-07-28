@@ -44,13 +44,13 @@ export function generateStaffNotation(chord: ChordData): string {
       // Use native VexFlow API without font loading (uses default fonts)
       const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = VF;
 
-      // Create compact VexFlow renderer
+      // Create ultra-compact VexFlow renderer
       const renderer = new Renderer(container, Renderer.Backends.SVG);
-      renderer.resize(200, 120);
+      renderer.resize(100, 120);
       const context = renderer.getContext();
 
-      // Create minimal staff with treble clef, tightly centered
-      const stave = new Stave(20, 15, 160);
+      // Create ultra-minimal staff with treble clef
+      const stave = new Stave(10, 15, 80);
       stave.addClef("treble");
       stave.setContext(context).draw();
 
@@ -72,8 +72,8 @@ export function generateStaffNotation(chord: ChordData): string {
       const voice = new Voice({ num_beats: 4, beat_value: 4 });
       voice.addTickables([chordNote]);
 
-      // Format and draw with minimal spacing - just enough for the notes
-      const formatter = new Formatter().joinVoices([voice]).format([voice], 90);
+      // Format and draw with ultra-minimal spacing
+      const formatter = new Formatter().joinVoices([voice]).format([voice], 50);
       voice.draw(context, stave);
       
     } catch (error) {
