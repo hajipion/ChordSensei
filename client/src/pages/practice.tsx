@@ -120,17 +120,17 @@ export default function Practice({ params }: PracticeProps) {
   }
 
   return (
-    <div className="min-h-screen p-4">
+    <div className="min-h-screen p-2">
       <div className="max-w-md mx-auto w-full h-full flex flex-col">
         {/* Progress Header */}
-        <div className="text-center py-4">
-          <div className="text-3xl font-mono font-bold text-gray-900">
+        <div className="text-center py-2">
+          <div className="text-2xl font-mono font-bold text-gray-900">
             {session.currentRound}/{session.totalRounds}
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col justify-center items-center space-y-8">
+        <div className="flex-1 flex flex-col justify-center items-center space-y-4">
           {/* Color Flag */}
           <div className="text-center">
             <div className="flex flex-col items-center space-y-4">
@@ -140,45 +140,44 @@ export default function Practice({ params }: PracticeProps) {
 
           {/* Chord Content */}
           <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-4">
+            <div className="text-4xl font-bold text-gray-900 mb-2">
               {currentChord.japaneseName}
             </div>
             
             {/* Staff Notation */}
-            <div className="mb-4">
+            <div className="mb-6">
               <StaffNotation chord={currentChord} className="h-20" />
             </div>
-            
+          </div>
+
+          {/* Action Buttons */}
+          <div className="w-full px-4 space-y-3">
             {/* Play Button */}
             <Button
               onClick={() => playChordSound(currentChord)}
-              variant="outline"
-              size="sm"
-              className="flex items-center space-x-2 text-blue-600 hover:text-blue-700"
+              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-4 px-4 rounded-3xl transition-colors shadow-lg flex items-center justify-center border border-gray-300"
             >
-              <Play className="w-4 h-4" />
+              <Play className="w-6 h-6 mr-2" />
               <span>リプレイ</span>
             </Button>
-          </div>
-
-          {/* Answer Buttons */}
-          <div className="w-full px-4">
+            
+            {/* Answer Buttons */}
             <div className="grid grid-cols-2 gap-4">
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-8 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-6 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
               >
-                <X className="w-16 h-16 mb-2" />
-                <span className="text-base">まちがい</span>
+                <X className="w-24 h-24 mb-1" />
+                <span className="text-sm">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-8 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
+                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-6 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
               >
-                <Circle className="w-16 h-16 mb-2" />
-                <span className="text-base">せいかい</span>
+                <Circle className="w-24 h-24 mb-1" />
+                <span className="text-sm">せいかい</span>
               </Button>
             </div>
           </div>

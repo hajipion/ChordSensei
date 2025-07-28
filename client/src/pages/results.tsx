@@ -1,10 +1,10 @@
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ChordFlag } from "@/components/chord-flag";
+
 import { useQuery } from "@tanstack/react-query";
 import { type Session, type ChordResult } from "@shared/schema";
-import { X, Check } from "lucide-react";
+import { X, Circle, Check } from "lucide-react";
 
 interface ResultsProps {
   params: { sessionId: string };
@@ -49,9 +49,9 @@ export default function Results({ params }: ResultsProps) {
     <div className="min-h-screen p-4 bg-gray-50">
       <div className="max-w-md mx-auto w-full">
         {/* Header */}
-        <div className="text-center py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">練習結果</h1>
-          <div className="text-6xl font-bold text-blue-600 mb-2">
+        <div className="text-center py-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">練習結果</h1>
+          <div className="text-6xl font-bold text-green-600 mb-2">
             {correctAnswers}/{session.totalRounds}
           </div>
           <div className="text-lg text-gray-600">
@@ -61,13 +61,13 @@ export default function Results({ params }: ResultsProps) {
 
         {/* Results Summary */}
         <Card className="mb-6">
-          <CardContent className="p-4">
-            <div className="space-y-2">
+          <CardContent className="p-0">
+            <div>
               {results.map((result: ChordResult, index) => (
-                <div key={index} className="flex items-center py-2">
+                <div key={index} className={`flex items-center py-3 px-4 ${index < results.length - 1 ? 'border-b border-gray-200' : ''}`}>
                   <div className="w-6 h-6 flex items-center justify-center mr-3">
                     {result.isCorrect ? (
-                      <Check className="w-4 h-4 text-green-500" />
+                      <Circle className="w-4 h-4 text-green-500" />
                     ) : (
                       <X className="w-4 h-4 text-red-500" />
                     )}
@@ -90,7 +90,7 @@ export default function Results({ params }: ResultsProps) {
           <div className="max-w-md mx-auto">
             <Button 
               onClick={returnHome}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-xl text-lg transition-colors"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-6 px-6 rounded-xl text-lg transition-colors"
             >
               ホームに戻る
             </Button>

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Minus, Plus } from "lucide-react";
-import { ChordFlag } from "@/components/chord-flag";
+
 import { chordData } from "@/lib/chord-data";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
@@ -69,8 +69,12 @@ export default function Home() {
     });
   };
 
-  const selectAllChords = () => {
-    setSelectedChords(chordData.map(chord => chord.japaneseName));
+  const toggleAllChords = () => {
+    if (selectedChords.length === chordData.length) {
+      setSelectedChords(["ドミソ"]); // Keep "ドミソ" always selected
+    } else {
+      setSelectedChords(chordData.map(chord => chord.japaneseName));
+    }
   };
 
   const incrementRounds = () => {
@@ -100,10 +104,7 @@ export default function Home() {
   return (
     <div className="min-h-screen p-4 flex flex-col bg-gray-50">
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
-        {/* Header */}
-        <div className="text-center py-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">絶対音感トレーニング</h1>
-        </div>
+
 
         {/* Chord Selection */}
         <Card className="mb-6">
@@ -111,12 +112,12 @@ export default function Home() {
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-900">和音</h2>
               <Button
-                onClick={selectAllChords}
+                onClick={toggleAllChords}
                 variant="outline"
                 size="sm"
                 className="text-sm"
               >
-                すべて選択
+                {selectedChords.length === chordData.length ? "すべて解除" : "すべて選択"}
               </Button>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -151,30 +152,29 @@ export default function Home() {
           <CardContent className="p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-semibold text-gray-900">練習回数</h2>
-              <div className="text-2xl font-bold text-gray-900">{selectedRounds}回</div>
-            </div>
-            <div className="flex items-center justify-center space-x-6">
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-12 h-12 rounded-full"
-                onClick={decrementRounds}
-                disabled={selectedRounds <= 5}
-              >
-                <Minus className="h-4 w-4" />
-              </Button>
-              <div className="text-3xl font-bold text-gray-900 min-w-[60px] text-center">
-                {selectedRounds}
+              <div className="flex items-center space-x-3">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-8 h-8 rounded-full"
+                  onClick={decrementRounds}
+                  disabled={selectedRounds <= 5}
+                >
+                  <Minus className="h-3 w-3" />
+                </Button>
+                <div className="text-xl font-bold text-gray-900 min-w-[40px] text-center">
+                  {selectedRounds}
+                </div>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="w-8 h-8 rounded-full"
+                  onClick={incrementRounds}
+                  disabled={selectedRounds >= 20}
+                >
+                  <Plus className="h-3 w-3" />
+                </Button>
               </div>
-              <Button
-                variant="outline"
-                size="icon"
-                className="w-12 h-12 rounded-full"
-                onClick={incrementRounds}
-                disabled={selectedRounds >= 20}
-              >
-                <Plus className="h-4 w-4" />
-              </Button>
             </div>
           </CardContent>
         </Card>
@@ -183,7 +183,7 @@ export default function Home() {
         <Button 
           onClick={startTraining}
           disabled={createSessionMutation.isPending}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 px-6 rounded-xl text-xl transition-colors shadow-lg"
+          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-6 px-6 rounded-xl text-xl transition-colors shadow-lg"
         >
           {createSessionMutation.isPending ? "準備中..." : "トレーニング開始"}
         </Button>
