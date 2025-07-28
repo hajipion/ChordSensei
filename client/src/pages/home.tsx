@@ -138,7 +138,7 @@ export default function Home() {
         </div>
 
         {/* Controls Row */}
-        <div className="mb-8 flex gap-4">
+        <div className="mb-8 flex gap-4 items-center">
           {/* Round Selection */}
           <div className="flex-1">
             <div className="flex items-center justify-center space-x-3">
