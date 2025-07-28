@@ -78,7 +78,9 @@ Preferred communication style: Simple, everyday language.
 
 ### Audio
 - **Tone.js**: Web Audio API framework for realistic piano sound synthesis
-- **Audio Engine**: Custom implementation with effects chain (chorus, EQ, compressor, reverb)
+- **Audio Engine v1.0**: Basic Salamander Grand Piano sampler (archived in audio-engine-v1.ts)
+- **Audio Engine v2.0**: Enhanced with professional effects chain (EQ, compressor, hall reverb)
+- **Salamander Grand Piano**: High-quality Yamaha C5 samples from CDN
 - **Chord Playback**: Automatic and manual chord sound generation during practice
 
 ## Deployment Strategy
