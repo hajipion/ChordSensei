@@ -44,13 +44,13 @@ export function generateStaffNotation(chord: ChordData): string {
       // Use native VexFlow API without font loading (uses default fonts)
       const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = VF;
 
-      // Create VexFlow renderer with more height and better spacing
+      // Create VexFlow renderer with centered layout
       const renderer = new Renderer(container, Renderer.Backends.SVG);
-      renderer.resize(280, 120);
+      renderer.resize(300, 120);
       const context = renderer.getContext();
 
-      // Create staff with treble clef and more spacing
-      const stave = new Stave(20, 15, 200);
+      // Create staff with treble clef, centered with more space for notes
+      const stave = new Stave(40, 15, 220);
       stave.addClef("treble");
       stave.setContext(context).draw();
 
@@ -72,8 +72,8 @@ export function generateStaffNotation(chord: ChordData): string {
       const voice = new Voice({ num_beats: 4, beat_value: 4 });
       voice.addTickables([chordNote]);
 
-      // Format and draw with better spacing between clef and notes
-      const formatter = new Formatter().joinVoices([voice]).format([voice], 120);
+      // Format and draw with more spacing between clef and notes
+      const formatter = new Formatter().joinVoices([voice]).format([voice], 150);
       voice.draw(context, stave);
       
     } catch (error) {
