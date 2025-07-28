@@ -93,7 +93,7 @@ export default function Practice({ params }: PracticeProps) {
   const playChordSound = async (chord: ChordData) => {
     try {
       await audioEngine.initialize();
-      await audioEngine.playChord(chord.notes, "1s");
+      await audioEngine.playChord(chord.notes, "0.5s");
     } catch (error) {
       console.error("Failed to play chord sound:", error);
     }

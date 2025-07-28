@@ -2,10 +2,6 @@ import * as Tone from "tone";
 
 export class AudioEngine {
   private sampler: Tone.Sampler | null = null;
-  private reverb: Tone.Reverb | null = null;
-  private convolver: Tone.Convolver | null = null;
-  private compressor: Tone.Compressor | null = null;
-  private eq: Tone.EQ3 | null = null;
   private isInitialized = false;
 
   async initialize() {
@@ -15,7 +11,7 @@ export class AudioEngine {
       // Start Tone.js audio context
       await Tone.start();
       
-      // Create high-quality piano sampler using Salamander Grand Piano samples
+      // Create clean piano sampler using Salamander Grand Piano samples - no effects
       this.sampler = new Tone.Sampler({
         urls: {
           A0: "A0.mp3", 
@@ -47,39 +43,9 @@ export class AudioEngine {
           "D#7": "Ds7.mp3", 
           "F#7": "Fs7.mp3"
         },
-        release: 1.5, // Slightly longer release for more natural sustain
+        release: 1,
         baseUrl: "https://tonejs.github.io/audio/salamander/"
-      });
-
-      // Create professional-grade effects chain for grand piano sound
-      
-      // 1. EQ for frequency shaping (piano characteristics)
-      this.eq = new Tone.EQ3({
-        low: 2,        // Warm low frequencies
-        mid: 1,        // Clear midrange  
-        high: 3,       // Sparkling highs
-        lowFrequency: 250,
-        highFrequency: 2500,
-      });
-
-      // 2. Compressor for dynamic control and punch
-      this.compressor = new Tone.Compressor({
-        threshold: -24,
-        ratio: 4,
-        attack: 0.005,
-        release: 0.1,
-        knee: 10,
-      });
-
-      // 3. Hall reverb for spacious grand piano room sound
-      this.reverb = new Tone.Reverb({
-        decay: 3.5,        // Long decay for grand hall
-        wet: 0.25,         // 25% wet signal
-        preDelay: 0.02,    // Small pre-delay for realism
-      });
-
-      // Chain effects: Sampler -> EQ -> Compressor -> Reverb -> Destination
-      this.sampler.chain(this.eq, this.compressor, this.reverb, Tone.Destination);
+      }).toDestination();
 
       this.isInitialized = true;
     } catch (error) {
@@ -87,7 +53,7 @@ export class AudioEngine {
     }
   }
 
-  async playChord(notes: string[], duration: string = "1s") {
+  async playChord(notes: string[], duration: string = "0.5s") {
     if (!this.sampler || !this.isInitialized) {
       await this.initialize();
     }
@@ -128,22 +94,6 @@ export class AudioEngine {
     if (this.sampler) {
       this.sampler.dispose();
       this.sampler = null;
-    }
-    if (this.reverb) {
-      this.reverb.dispose();
-      this.reverb = null;
-    }
-    if (this.compressor) {
-      this.compressor.dispose();
-      this.compressor = null;
-    }
-    if (this.eq) {
-      this.eq.dispose();
-      this.eq = null;
-    }
-    if (this.convolver) {
-      this.convolver.dispose();
-      this.convolver = null;
     }
     this.isInitialized = false;
   }
