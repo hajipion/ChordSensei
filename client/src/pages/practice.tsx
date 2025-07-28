@@ -19,8 +19,17 @@ interface PracticeProps {
 export default function Practice({ params }: PracticeProps) {
   const [, setLocation] = useLocation();
   const [currentChord, setCurrentChord] = useState<ChordData | null>(null);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const queryClient = useQueryClient();
   const { toast } = useToast();
+
+  // Load audio setting from localStorage
+  useEffect(() => {
+    const savedAudio = localStorage.getItem("audioEnabled");
+    if (savedAudio !== null) {
+      setAudioEnabled(JSON.parse(savedAudio));
+    }
+  }, []);
 
   const { data: session, isLoading } = useQuery<Session>({
     queryKey: ["/api/sessions", params.sessionId],
@@ -120,63 +129,66 @@ export default function Practice({ params }: PracticeProps) {
   }
 
   return (
-    <div className="min-h-screen p-2">
-      <div className="max-w-md mx-auto w-full h-full flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="max-w-md mx-auto w-full h-screen flex flex-col">
         {/* Progress Header */}
-        <div className="text-center py-2">
-          <div className="text-2xl font-mono font-bold text-gray-900">
+        <div className="text-center py-4">
+          <div className="text-3xl font-mono font-bold text-gray-900">
             {session.currentRound}/{session.totalRounds}
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col justify-center items-center space-y-4">
-          {/* Color Flag */}
-          <div className="text-center">
-            <div className="flex flex-col items-center space-y-4">
-              <div className="w-16 h-16 rounded-full shadow-lg" style={{ backgroundColor: currentChord.color }}></div>
+        <div className="flex-1 flex flex-col justify-between px-4 py-4">
+          {/* Top Section */}
+          <div className="flex-1 flex flex-col justify-center items-center space-y-4">
+            {/* Color Flag */}
+            <div className="flex justify-center">
+              <div className="w-20 h-20 rounded-full" style={{ backgroundColor: currentChord.color }}></div>
+            </div>
+
+            {/* Chord Content */}
+            <div className="text-center">
+              <div className="text-5xl font-mono font-bold text-gray-900 mb-2">
+                {currentChord.japaneseName}
+              </div>
+              
+              {/* Staff Notation */}
+              <div>
+                <StaffNotation chord={currentChord} className="h-24" />
+              </div>
             </div>
           </div>
 
-          {/* Chord Content */}
-          <div className="text-center">
-            <div className="text-4xl font-bold text-gray-900 mb-2">
-              {currentChord.japaneseName}
-            </div>
-            
-            {/* Staff Notation */}
-            <div className="mb-6">
-              <StaffNotation chord={currentChord} className="h-20" />
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="w-full px-4 space-y-3">
-            {/* Play Button */}
-            <Button
-              onClick={() => playChordSound(currentChord)}
-              className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-4 px-4 rounded-3xl transition-colors shadow-lg flex items-center justify-center border border-gray-300"
-            >
-              <Play className="w-6 h-6 mr-2" />
-              <span>リプレイ</span>
-            </Button>
+          {/* Bottom Section - Action Buttons */}
+          <div className="space-y-3">
+            {/* Play Button - only show if audio is enabled */}
+            {audioEnabled && (
+              <Button
+                onClick={() => playChordSound(currentChord)}
+                className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-4 px-4 rounded-lg transition-colors flex items-center justify-center border border-gray-900"
+              >
+                <Play className="w-6 h-6 mr-2" />
+                <span>リプレイ</span>
+              </Button>
+            )}
             
             {/* Answer Buttons */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 w-full">
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-6 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-4 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[120px]"
               >
-                <X className="w-24 h-24 mb-1" />
+                <div className="text-8xl leading-none mb-2">✕</div>
                 <span className="text-sm">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-6 px-4 rounded-3xl text-2xl transition-colors shadow-lg flex flex-col items-center h-auto border border-gray-300"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-4 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[120px]"
               >
-                <Circle className="w-24 h-24 mb-1" />
+                <div className="text-8xl leading-none mb-2">○</div>
                 <span className="text-sm">せいかい</span>
               </Button>
             </div>

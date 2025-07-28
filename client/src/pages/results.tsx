@@ -46,51 +46,49 @@ export default function Results({ params }: ResultsProps) {
   };
 
   return (
-    <div className="min-h-screen p-4 bg-gray-50">
-      <div className="max-w-md mx-auto w-full">
+    <div className="min-h-screen bg-white">
+      <div className="max-w-md mx-auto w-full pb-24">
         {/* Header */}
         <div className="text-center py-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">練習結果</h1>
-          <div className="text-6xl font-bold text-green-600 mb-2">
+          <h1 className="text-3xl font-mono font-bold text-gray-900 mb-6">結果</h1>
+          <div className="text-6xl font-mono font-bold text-green-600 mb-2">
             {correctAnswers}/{session.totalRounds}
           </div>
           <div className="text-lg text-gray-600">
-            正解率 <span className="font-semibold">{accuracy}</span>%
+            正解率 <span className="font-mono font-semibold">{accuracy}</span>%
           </div>
         </div>
 
         {/* Results Summary */}
-        <Card className="mb-6">
-          <CardContent className="p-0">
-            <div>
-              {results.map((result: ChordResult, index) => (
-                <div key={index} className={`flex items-center py-3 px-4 ${index < results.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                  <div className="w-6 h-6 flex items-center justify-center mr-3">
-                    {result.isCorrect ? (
-                      <Circle className="w-4 h-4 text-green-500" />
-                    ) : (
-                      <X className="w-4 h-4 text-red-500" />
-                    )}
-                  </div>
-                  <div className="w-8 h-8 rounded-full mr-3" style={{ backgroundColor: result.color }}></div>
-                  <div className="flex-1">
-                    <div className="font-medium text-gray-900">{result.chordName}</div>
-                  </div>
-                  <div className="text-sm text-gray-500">
-                    第{result.roundNumber}問
-                  </div>
+        <div className="bg-white border border-gray-200 rounded-lg mx-4">
+          <div>
+            {results.map((result: ChordResult, index) => (
+              <div key={index} className={`flex items-center py-4 px-4 ${index < results.length - 1 ? 'border-b border-gray-200' : ''}`}>
+                <div className="w-6 h-6 flex items-center justify-center mr-3">
+                  {result.isCorrect ? (
+                    <Circle className="w-5 h-5 text-green-500" />
+                  ) : (
+                    <X className="w-5 h-5 text-red-500" />
+                  )}
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+                <div className="w-8 h-8 rounded-full mr-3" style={{ backgroundColor: result.color }}></div>
+                <div className="flex-1">
+                  <div className="font-mono font-medium text-gray-900">{result.chordName}</div>
+                </div>
+                <div className="text-sm font-mono text-gray-500">
+                  第{result.roundNumber}問
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
 
         {/* Fixed Bottom Button */}
         <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
           <div className="max-w-md mx-auto">
             <Button 
               onClick={returnHome}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-6 px-6 rounded-xl text-lg transition-colors"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-6 px-6 rounded-lg text-lg transition-colors"
             >
               ホームに戻る
             </Button>
