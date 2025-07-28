@@ -77,9 +77,10 @@ export default function Practice({ params }: PracticeProps) {
     
     // Play chord sound automatically when a new chord is generated
     if (nextChord) {
-      setTimeout(() => {
-        playChordSound(nextChord);
-      }, 500); // Small delay to let UI settle
+      setTimeout(async () => {
+        await audioEngine.initialize(); // Initialize first to load samples
+        await playChordSound(nextChord);
+      }, 800); // Slightly longer delay to allow sample loading
     }
   };
 
