@@ -84,8 +84,8 @@ export default function Practice({ params }: PracticeProps) {
     const nextChord = getRandomChord(availableChords);
     setCurrentChord(nextChord || null);
     
-    // Play chord sound automatically when a new chord is generated
-    if (nextChord) {
+    // Play chord sound automatically when a new chord is generated (only if audio is enabled)
+    if (nextChord && audioEnabled) {
       setTimeout(async () => {
         await audioEngine.initialize(); // Initialize first to load samples
         await playChordSound(nextChord);
@@ -178,18 +178,18 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-4 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[120px]"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[100px]"
               >
-                <div className="text-8xl leading-none mb-2">✕</div>
-                <span className="text-sm">まちがい</span>
+                <div className="text-6xl leading-none">✕</div>
+                <span className="text-xs mt-1">まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-6 px-4 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[120px]"
+                className="bg-white hover:bg-gray-100 text-gray-900 font-mono font-bold py-4 px-2 rounded-lg transition-colors flex flex-col items-center justify-center border-2 border-gray-900 min-h-[100px]"
               >
-                <div className="text-8xl leading-none mb-2">○</div>
-                <span className="text-sm">せいかい</span>
+                <div className="text-6xl leading-none">○</div>
+                <span className="text-xs mt-1">せいかい</span>
               </Button>
             </div>
           </div>
