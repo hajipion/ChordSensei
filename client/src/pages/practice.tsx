@@ -158,7 +158,7 @@ export default function Practice({ params }: PracticeProps) {
               
               {/* Staff Notation */}
               <div className="mb-2">
-                <StaffNotation chord={currentChord} className="h-16" />
+                <StaffNotation chord={currentChord} className="h-20" />
               </div>
             </CardContent>
           </Card>
