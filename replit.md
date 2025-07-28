@@ -79,9 +79,10 @@ Preferred communication style: Simple, everyday language.
 ### Audio
 - **Tone.js**: Web Audio API framework for realistic piano sound synthesis
 - **Audio Engine v1.0**: Basic Salamander Grand Piano sampler (archived in audio-engine-v1.ts)
-- **Audio Engine v2.0**: Enhanced with professional effects chain (EQ, compressor, hall reverb)
-- **Salamander Grand Piano**: High-quality Yamaha C5 samples from CDN
-- **Chord Playback**: Automatic and manual chord sound generation during practice
+- **Audio Engine v2.0**: Stable, optimized Salamander piano with 0.5s clean sound (CONFIRMED WORKING)
+- **Salamander Grand Piano**: High-quality samples from Tone.js CDN
+- **Chord Playback**: Real-time chord sound generation with no echo/reverb effects
+- **Error Resolution**: Fixed unhandledrejection errors, stable audio playback achieved
 
 ## Deployment Strategy
 
@@ -100,5 +101,14 @@ Preferred communication style: Simple, everyday language.
 - **Migration Ready**: Drizzle migrations configured for PostgreSQL
 - **Connection Pooling**: Neon Database serverless driver integration
 - **Schema Evolution**: Type-safe database schema management
+
+## Recent Changes
+
+**January 28, 2025**
+- ✓ Audio Engine v2.0 confirmed as stable version with 0.5s clean piano sound
+- ✓ Fixed all unhandledrejection runtime errors in audio system
+- ✓ Enhanced five-line staff notation with professional music engraving standards
+- ✓ Implemented precise note positioning, treble clef, stems, and ledger lines
+- → Continuing staff notation improvements based on abcjs library concepts
 
 The application is designed with scalability in mind, featuring a clean separation between frontend and backend, type-safe data handling, and a modular component architecture that supports future enhancements and database integration.

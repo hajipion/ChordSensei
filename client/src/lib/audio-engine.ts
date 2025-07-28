@@ -1,6 +1,6 @@
 import * as Tone from "tone";
 
-// V3.0 Simplified Audio Engine - No complex error-prone features
+// V2.0 Audio Engine - Stable Salamander Grand Piano (0.5s clean sound)
 export class AudioEngine {
   private sampler: Tone.Sampler | null = null;
   private isInitialized = false;
@@ -67,7 +67,7 @@ export class AudioEngine {
       console.log("Chord triggered successfully");
     } catch (error) {
       console.error("Failed to play chord:", error);
-      console.error("Error stack:", error.stack);
+      console.error("Error stack:", error instanceof Error ? error.stack : 'Unknown error');
       console.error("Notes attempted:", notes);
       console.error("Sampler state:", this.sampler ? "exists" : "null");
     }
