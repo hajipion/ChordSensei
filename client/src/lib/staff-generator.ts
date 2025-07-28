@@ -8,10 +8,16 @@ declare global {
 }
 
 // Convert note name to VexFlow notation
-function convertNoteToVexFlow(noteStr: string, octave: number): string {
-  // VexFlow uses lowercase note names with accidentals
-  const baseNote = noteStr.replace(/[#b]/, '').toLowerCase();
-  const accidental = noteStr.includes('#') ? '#' : noteStr.includes('b') ? 'b' : '';
+function convertNoteToVexFlow(noteStr: string): string {
+  // Extract note, accidental, and octave from chord-data format (e.g., "C4", "C#4", "Bb3")
+  const match = noteStr.match(/^([A-G])([#b]?)(\d)$/);
+  if (!match) {
+    console.error("Invalid note format:", noteStr);
+    return "c/4";
+  }
+  
+  const [, note, accidental, octave] = match;
+  const baseNote = note.toLowerCase();
   return `${baseNote}${accidental}/${octave}`;
 }
 
@@ -35,58 +41,40 @@ export function generateStaffNotation(chord: ChordData): string {
 
       const VF = window.VexFlow;
 
-      // Ensure fonts are loaded before creating notation
-      VF.loadFonts('Bravura', 'Academico').then(() => {
-        VF.setFonts('Bravura', 'Academico');
-        
-        const { Factory } = VF;
+      // Use native VexFlow API without font loading (uses default fonts)
+      const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = VF;
 
-        // Create VexFlow factory with proper renderer configuration
-        const factory = new Factory({
-          renderer: { 
-            elementId: containerId, 
-            width: 350, 
-            height: 120 
-          }
-        });
+      // Create VexFlow renderer using low-level API
+      const renderer = new Renderer(container, Renderer.Backends.SVG);
+      renderer.resize(350, 120);
+      const context = renderer.getContext();
 
-        // Get EasyScore for simplified notation
-        const score = factory.EasyScore();
-        const system = factory.System();
+      // Create staff with treble clef
+      const stave = new Stave(10, 10, 300);
+      stave.addClef("treble");
+      stave.setContext(context).draw();
 
-        // Convert chord notes to VexFlow notation with proper octave assignment
-        const vexFlowNotes = chord.notes.map((note, index) => {
-          // Assign different octaves for chord voicing (low to high)
-          const octave = index === 0 ? 3 : index === 1 ? 4 : 5;
-          return convertNoteToVexFlow(note, octave);
-        });
-
-        // Create chord notation string for EasyScore
-        // Format individual notes with quarter note duration, then combine in a voice
-        const noteString = vexFlowNotes.map(note => `${note}/q`).join(', ');
-        
-        // Add stave with treble clef and the chord notes
-        system
-          .addStave({
-            voices: [score.voice(score.notes(noteString))]
-          })
-          .addClef('treble');
-
-        // Draw the notation
-        factory.draw();
-      }).catch((fontError: any) => {
-        console.error("Font loading error:", fontError);
-        // Fallback without fonts
-        const { Factory } = VF;
-        const factory = new Factory({
-          renderer: { 
-            elementId: containerId, 
-            width: 350, 
-            height: 120 
-          }
-        });
-        factory.draw();
+      // Convert chord notes to VexFlow notation (use original octaves from chord data)
+      const vexFlowNotes = chord.notes.map((note) => {
+        return convertNoteToVexFlow(note);
       });
+
+      console.log("VexFlow notes:", vexFlowNotes); // Debug log
+      
+      // Create a single chord note (all notes played simultaneously)
+      const chordNote = new StaveNote({
+        clef: "treble",
+        keys: vexFlowNotes,
+        duration: "w" // whole note
+      });
+
+      // Create voice and add the chord
+      const voice = new Voice({ num_beats: 4, beat_value: 4 });
+      voice.addTickables([chordNote]);
+
+      // Format and draw
+      const formatter = new Formatter().joinVoices([voice]).format([voice], 280);
+      voice.draw(context, stave);
       
     } catch (error) {
       console.error("VexFlow rendering error:", error);
