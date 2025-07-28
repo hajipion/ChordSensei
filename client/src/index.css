@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+
+  /* Chord Colors */
+  --chord-red: hsl(0, 79%, 49%);
+  --chord-yellow: hsl(45, 93%, 58%);
+  --chord-blue: hsl(217, 73%, 57%);
+  --chord-black: hsl(217, 33%, 17%);
+  --chord-green: hsl(158, 93%, 40%);
+  --chord-orange: hsl(20, 91%, 48%);
+  --chord-purple: hsl(258, 73%, 57%);
+  --chord-pink: hsl(328, 73%, 57%);
+  --chord-brown: hsl(35, 80%, 28%);
+  --chord-yellow-green: hsl(84, 73%, 44%);
+  --chord-skin: hsl(48, 87%, 76%);
+  --chord-wisteria: hsl(270, 73%, 61%);
+  --chord-gray: hsl(220, 13%, 46%);
+  --chord-light-blue: hsl(188, 95%, 43%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(207, 90%, 54%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+@layer components {
+  .chord-flag {
+    @apply rounded-lg shadow-sm;
+    width: 60px;
+    height: 40px;
+  }
+
+  .chord-flag-large {
+    @apply rounded-2xl shadow-lg;
+    width: 128px;
+    height: 80px;
+  }
+
+  .chord-red { background-color: var(--chord-red); }
+  .chord-yellow { background-color: var(--chord-yellow); }
+  .chord-blue { background-color: var(--chord-blue); }
+  .chord-black { background-color: var(--chord-black); }
+  .chord-green { background-color: var(--chord-green); }
+  .chord-orange { background-color: var(--chord-orange); }
+  .chord-purple { background-color: var(--chord-purple); }
+  .chord-pink { background-color: var(--chord-pink); }
+  .chord-brown { background-color: var(--chord-brown); }
+  .chord-yellow-green { background-color: var(--chord-yellow-green); }
+  .chord-skin { background-color: var(--chord-skin); }
+  .chord-wisteria { background-color: var(--chord-wisteria); }
+  .chord-gray { background-color: var(--chord-gray); }
+  .chord-light-blue { background-color: var(--chord-light-blue); }
+}
