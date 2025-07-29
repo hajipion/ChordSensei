@@ -51,9 +51,9 @@ export function generateStaffNotation(chord: ChordData): string {
 
       // Check if chord has accidentals to determine width
       const hasAccidentals = chord.notes.some(note => note.match(/[#b]/));
-      const staveWidth = hasAccidentals ? 120 : 80; // 1.5x wider for accidentals
-      const canvasWidth = hasAccidentals ? 150 : 100;
-      const formatterWidth = hasAccidentals ? 75 : 50;
+      const staveWidth = hasAccidentals ? 100 : 80; // 1.25x wider for accidentals
+      const canvasWidth = hasAccidentals ? 125 : 100;
+      const formatterWidth = hasAccidentals ? 62 : 50;
 
       // Create ultra-compact VexFlow renderer with dynamic width
       const renderer = new Renderer(container, Renderer.Backends.SVG);
