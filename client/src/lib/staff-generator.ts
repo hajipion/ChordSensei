@@ -44,22 +44,28 @@ export function generateStaffNotation(chord: ChordData): string {
       // Use native VexFlow API without font loading (uses default fonts)
       const { Renderer, Stave, StaveNote, Voice, Formatter, Accidental } = VF;
 
-      // Create ultra-compact VexFlow renderer
-      const renderer = new Renderer(container, Renderer.Backends.SVG);
-      renderer.resize(100, 120);
-      const context = renderer.getContext();
-
-      // Create ultra-minimal staff with treble clef, no end bars
-      const stave = new Stave(10, 15, 80);
-      stave.addClef("treble");
-      stave.setEndBarType(VF.Barline.type.NONE);
-      stave.setBegBarType(VF.Barline.type.NONE);
-      stave.setContext(context).draw();
-
       // Convert chord notes to VexFlow notation (use original octaves from chord data)
       const vexFlowNotes = chord.notes.map((note) => {
         return convertNoteToVexFlow(note);
       });
+
+      // Check if chord has accidentals to determine width
+      const hasAccidentals = chord.notes.some(note => note.match(/[#b]/));
+      const staveWidth = hasAccidentals ? 120 : 80; // 1.5x wider for accidentals
+      const canvasWidth = hasAccidentals ? 150 : 100;
+      const formatterWidth = hasAccidentals ? 75 : 50;
+
+      // Create ultra-compact VexFlow renderer with dynamic width
+      const renderer = new Renderer(container, Renderer.Backends.SVG);
+      renderer.resize(canvasWidth, 120);
+      const context = renderer.getContext();
+
+      // Create ultra-minimal staff with treble clef, no end bars
+      const stave = new Stave(10, 15, staveWidth);
+      stave.addClef("treble");
+      stave.setEndBarType(VF.Barline.type.NONE);
+      stave.setBegBarType(VF.Barline.type.NONE);
+      stave.setContext(context).draw();
 
       // Create a single chord note (all notes played simultaneously)
       const chordNote = new StaveNote({
@@ -85,8 +91,8 @@ export function generateStaffNotation(chord: ChordData): string {
       const voice = new Voice({ num_beats: 4, beat_value: 4 });
       voice.addTickables([chordNote]);
 
-      // Format and draw with ultra-minimal spacing
-      const formatter = new Formatter().joinVoices([voice]).format([voice], 50);
+      // Format and draw with dynamic spacing based on accidentals
+      const formatter = new Formatter().joinVoices([voice]).format([voice], formatterWidth);
       voice.draw(context, stave);
       
     } catch (error) {

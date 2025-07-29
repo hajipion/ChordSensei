@@ -112,6 +112,8 @@ Preferred communication style: Simple, everyday language.
 - ✓ Optimized session completion flow with proper cache management for reliable result display
 - ✓ Enhanced button tap feedback with color-coded backgrounds: green for correct, red for wrong, darker gray for replay
 - ✓ Optimized button behavior to show colors only while pressed and removed post-tap transparency effects
+- ✓ Fixed staff notation to display sharp and flat accidentals correctly using VexFlow addModifier API
+- ✓ Implemented dynamic staff width: 1.5x wider for chords with accidentals for better readability
 - ✓ Enhanced practice screen UI with proper button styling and visual consistency
 - ✓ Fixed chord repetition prevention logic to avoid 3 consecutive identical chords
 - ✓ Implemented 70% probability reduction for 2 consecutive identical chords
