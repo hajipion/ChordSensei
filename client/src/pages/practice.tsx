@@ -151,7 +151,7 @@ export default function Practice({ params }: PracticeProps) {
             {/* Chord Content */}
             <div className="text-center">
               <div className="text-5xl font-bold text-gray-900 mb-1">
-                <span style={{ letterSpacing: '0.5em' }}>{currentChord.japaneseName.slice(0, -1)}</span>
+                <span style={{ letterSpacing: '0.25em' }}>{currentChord.japaneseName.slice(0, -1)}</span>
                 <span>{currentChord.japaneseName.slice(-1)}</span>
               </div>
               
@@ -190,7 +190,18 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black" style={{ strokeWidth: '10px', stroke: 'currentColor', fill: 'none' }}>○</div>
+                <div className="flex items-center justify-center">
+                  <svg width="80" height="80" viewBox="0 0 80 80" className="text-gray-900">
+                    <circle 
+                      cx="40" 
+                      cy="40" 
+                      r="30" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="8"
+                    />
+                  </svg>
+                </div>
                 <span className="text-lg">せいかい</span>
               </Button>
             </div>
