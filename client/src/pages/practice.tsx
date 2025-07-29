@@ -130,8 +130,8 @@ export default function Practice({ params }: PracticeProps) {
   }
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <div className="max-w-md mx-auto w-full h-screen flex flex-col">
+    <div className="h-screen bg-white flex flex-col overflow-hidden">
+      <div className="max-w-md mx-auto w-full h-full flex flex-col">
         {/* Progress Header */}
         <div className="text-center py-4">
           <div className="text-3xl font-mono font-bold text-gray-900">
@@ -163,7 +163,7 @@ export default function Practice({ params }: PracticeProps) {
           </div>
 
           {/* Bottom Section - Action Buttons */}
-          <div className="space-y-3">
+          <div className="space-y-3 mb-8">
             {/* Play Button - only show if audio is enabled */}
             {audioEnabled && (
               <Button

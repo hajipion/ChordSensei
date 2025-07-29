@@ -113,7 +113,9 @@ Preferred communication style: Simple, everyday language.
 - ✓ Updated circle icon for correct answers using border-based CSS approach
 - ✓ Optimized home screen layout with viewport-based title margins for responsiveness
 - ✓ Implemented equal spacing between main UI sections using flexbox justify-between
-- ✓ Added iPhone SE compatibility with min() CSS function for compact screens
+- ✓ Added iPhone SE compatibility with responsive title sizing (670px breakpoint)
+- ✓ Unified answer button icons using div-based approach for cross-browser consistency
+- ✓ Implemented iPhone Safari URL bar compatibility with fixed viewport height
 - ✓ Fine-tuned typography with reduced letter spacing and line height adjustments
 
 **January 28, 2025**
