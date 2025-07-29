@@ -105,7 +105,12 @@
   .chord-light-blue { background-color: var(--chord-light-blue); }
 }
 
-/* Small screen title adjustments */
+/* Title styling with responsive adjustments */
+.home-title {
+  margin-top: 8vh;
+  margin-bottom: 6vh;
+}
+
 @media (max-height: 670px) {
   .home-title {
     font-size: 1.5rem !important; /* Half of text-3xl (3rem -> 1.5rem) */

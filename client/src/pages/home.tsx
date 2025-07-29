@@ -118,7 +118,7 @@ export default function Home() {
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
         
         {/* Title */}
-        <div className="text-center" style={{ marginTop: '8vh', marginBottom: '6vh' }}>
+        <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 home-title">絶対音感トレーニング</h1>
         </div>
 
