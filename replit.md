@@ -104,6 +104,18 @@ Preferred communication style: Simple, everyday language.
 
 ## Recent Changes
 
+**January 29, 2025**
+- ✓ Enhanced practice screen UI with proper button styling and visual consistency
+- ✓ Fixed chord repetition prevention logic to avoid 3 consecutive identical chords
+- ✓ Implemented 70% probability reduction for 2 consecutive identical chords
+- ✓ Added chord history tracking in database schema and storage system
+- ✓ Redesigned button layout with consistent padding and visual hierarchy
+- ✓ Updated circle icon for correct answers using border-based CSS approach
+- ✓ Optimized home screen layout with viewport-based title margins for responsiveness
+- ✓ Implemented equal spacing between main UI sections using flexbox justify-between
+- ✓ Added iPhone SE compatibility with min() CSS function for compact screens
+- ✓ Fine-tuned typography with reduced letter spacing and line height adjustments
+
 **January 28, 2025**
 - ✓ Audio Engine v2.0 confirmed as stable version with 0.5s clean piano sound
 - ✓ Fixed all unhandledrejection runtime errors in audio system
