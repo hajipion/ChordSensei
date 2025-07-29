@@ -6,8 +6,8 @@
   <rect x="170" y="86" width="16" height="340" fill="#333333"/>
   
   <!-- Red flag -->
-  <path d="M186 86 L373 86 L280 133 L373 180 L186 180 Z" fill="#dc2626"/>
+  <rect x="186" y="86" width="187" height="94" fill="#dc2626"/>
   
   <!-- Flag shadow for depth -->
-  <path d="M186 86 L373 86 L280 133 L373 180 L186 180 Z" fill="#b91c1c" opacity="0.3" transform="translate(5,5)"/>
+  <rect x="191" y="91" width="187" height="94" fill="#b91c1c" opacity="0.3"/>
 </svg>
