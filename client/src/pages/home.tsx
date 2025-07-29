@@ -21,11 +21,7 @@ export default function Home() {
   useEffect(() => {
     const savedChords = localStorage.getItem("selectedChords");
     if (savedChords) {
-      const parsed = JSON.parse(savedChords);
-      if (!parsed.includes("ドミソ")) {
-        parsed.push("ドミソ");
-      }
-      setSelectedChords(parsed);
+      setSelectedChords(JSON.parse(savedChords));
     }
     
     const savedAudio = localStorage.getItem("audioEnabled");
@@ -68,10 +64,6 @@ export default function Home() {
 
   const toggleChordSelection = (chordName: string) => {
     setSelectedChords(prev => {
-      // Prevent deselecting "ドミソ"
-      if (chordName === "ドミソ" && prev.includes(chordName)) {
-        return prev;
-      }
       return prev.includes(chordName)
         ? prev.filter(name => name !== chordName)
         : [...prev, chordName];
@@ -80,7 +72,7 @@ export default function Home() {
 
   const toggleAllChords = () => {
     if (selectedChords.length === chordData.length) {
-      setSelectedChords(["ドミソ"]); // Keep "ドミソ" always selected
+      setSelectedChords([]); // Allow complete deselection
     } else {
       setSelectedChords(chordData.map(chord => chord.japaneseName));
     }
