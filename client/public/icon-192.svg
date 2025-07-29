@@ -3,7 +3,7 @@
   <rect width="192" height="192" fill="#ffffff"/>
   
   <!-- Flag pole -->
-  <rect x="64" y="32" width="6" height="85" fill="#d4b896"/>
+  <rect x="64" y="40" width="6" height="112" fill="#d4b896"/>
   
   <!-- Red flag -->
   <rect x="70" y="32" width="50" height="50" fill="#dc2626"/>
