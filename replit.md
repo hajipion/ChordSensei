@@ -105,6 +105,11 @@ Preferred communication style: Simple, everyday language.
 ## Recent Changes
 
 **January 29, 2025**
+- ✓ Fixed critical 10-question result display bug ensuring all answers are saved and displayed
+- ✓ Enhanced Apple touch icon compatibility for iOS 18.5 with multiple PNG sizes (120x120, 152x152, 180x180)
+- ✓ Added automatic scroll position reset on all page transitions for better UX
+- ✓ Improved results screen layout with proper bottom margins preventing content cutoff
+- ✓ Optimized session completion flow with proper cache management for reliable result display
 - ✓ Enhanced practice screen UI with proper button styling and visual consistency
 - ✓ Fixed chord repetition prevention logic to avoid 3 consecutive identical chords
 - ✓ Implemented 70% probability reduction for 2 consecutive identical chords

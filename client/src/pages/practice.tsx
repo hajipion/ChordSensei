@@ -53,12 +53,14 @@ export default function Practice({ params }: PracticeProps) {
       return response.json();
     },
     onSuccess: (updatedSession) => {
+      // Always update the session data first
+      queryClient.setQueryData(["/api/sessions", params.sessionId], updatedSession);
+      
       if (updatedSession.currentRound > updatedSession.totalRounds) {
         // Complete session and go to results
         completeMutation.mutate();
       } else {
-        // Update UI and continue to next round
-        queryClient.setQueryData(["/api/sessions", params.sessionId], updatedSession);
+        // Continue to next round
         generateNextChord(updatedSession);
       }
     },
@@ -76,7 +78,9 @@ export default function Practice({ params }: PracticeProps) {
       const response = await apiRequest("POST", `/api/sessions/${params.sessionId}/complete`);
       return response.json();
     },
-    onSuccess: () => {
+    onSuccess: (completedSession) => {
+      // Ensure the latest session data is cached before navigation
+      queryClient.setQueryData(["/api/sessions", params.sessionId], completedSession);
       setLocation(`/results/${params.sessionId}`);
     },
   });

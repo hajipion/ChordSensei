@@ -21,6 +21,8 @@ export default function Results({ params }: ResultsProps) {
 
   const { data: session, isLoading } = useQuery<Session>({
     queryKey: ["/api/sessions", params.sessionId],
+    staleTime: 0, // Always fetch fresh data
+    refetchOnMount: true,
   });
 
   if (isLoading) {
