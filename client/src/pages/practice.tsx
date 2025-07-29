@@ -191,13 +191,15 @@ export default function Practice({ params }: PracticeProps) {
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
                 <div 
-                  className="border-gray-900"
+                  className="border-gray-900 flex-shrink-0"
                   style={{ 
                     width: '80px', 
                     height: '80px', 
                     borderWidth: '8px',
                     borderStyle: 'solid',
-                    borderRadius: '50%'
+                    borderRadius: '50%',
+                    minWidth: '80px',
+                    minHeight: '80px'
                   }}
                 ></div>
                 <span className="text-lg">せいかい</span>
