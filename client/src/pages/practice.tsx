@@ -180,10 +180,10 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px] gap-2"
               >
                 {/* X icon made with divs */}
-                <div className="relative flex items-center justify-center" style={{ width: '53px', height: '53px' }}>
+                <div className="relative flex items-center justify-center flex-shrink-0" style={{ width: '53px', height: '53px' }}>
                   <div 
                     className="absolute bg-gray-900"
                     style={{ 
@@ -203,12 +203,12 @@ export default function Practice({ params }: PracticeProps) {
                     }}
                   ></div>
                 </div>
-                <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center', lineHeight: '1.1em' }}>まちがい</span>
+                <span className="text-lg flex items-center justify-center" style={{ height: '28px', lineHeight: '1.1em' }}>まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px] gap-2"
               >
                 {/* Circle icon made with div */}
                 <div 
@@ -218,12 +218,10 @@ export default function Practice({ params }: PracticeProps) {
                     height: '53px', 
                     borderWidth: '7px',
                     borderStyle: 'solid',
-                    borderRadius: '50%',
-                    minWidth: '53px',
-                    minHeight: '53px'
+                    borderRadius: '50%'
                   }}
                 ></div>
-                <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center', lineHeight: '1.1em' }}>せいかい</span>
+                <span className="text-lg flex items-center justify-center" style={{ height: '28px', lineHeight: '1.1em' }}>せいかい</span>
               </Button>
             </div>
           </div>
