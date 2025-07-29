@@ -17,6 +17,11 @@ export default function Home() {
   const [audioEnabled, setAudioEnabled] = useState(false);
   const { toast } = useToast();
 
+  // Reset scroll position on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Load saved settings from localStorage
   useEffect(() => {
     const savedChords = localStorage.getItem("selectedChords");

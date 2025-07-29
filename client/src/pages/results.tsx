@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -12,6 +13,11 @@ interface ResultsProps {
 
 export default function Results({ params }: ResultsProps) {
   const [, setLocation] = useLocation();
+
+  // Reset scroll position on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const { data: session, isLoading } = useQuery<Session>({
     queryKey: ["/api/sessions", params.sessionId],
@@ -60,7 +66,7 @@ export default function Results({ params }: ResultsProps) {
         </div>
 
         {/* Results Summary */}
-        <div className="bg-white border border-gray-200 rounded-lg mx-4">
+        <div className="bg-white border border-gray-200 rounded-lg mx-4 mb-8">
           <div>
             {results.map((result: ChordResult, index) => (
               <div key={index} className={`flex items-center py-4 px-4 ${index < results.length - 1 ? 'border-b border-gray-200' : ''}`}>

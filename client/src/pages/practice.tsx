@@ -23,6 +23,11 @@ export default function Practice({ params }: PracticeProps) {
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
+  // Reset scroll position on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Load audio setting from localStorage
   useEffect(() => {
     const savedAudio = localStorage.getItem("audioEnabled");
