@@ -116,6 +116,9 @@ Preferred communication style: Simple, everyday language.
 - ✓ Added iPhone SE compatibility with responsive title sizing (670px breakpoint)
 - ✓ Unified answer button icons using div-based approach for cross-browser consistency
 - ✓ Implemented iPhone Safari URL bar compatibility with fixed viewport height
+- ✓ Added PWA support with red flag icon and "絶対音感" title for iOS home screen
+- ✓ Fixed session completion UI to prevent 11/10 display flash
+- ✓ Made chord selection fully customizable (removed ドミソ requirement)
 - ✓ Fine-tuned typography with reduced letter spacing and line height adjustments
 
 **January 28, 2025**

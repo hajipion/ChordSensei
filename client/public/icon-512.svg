@@ -1,0 +1,13 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="512" height="512" fill="#ffffff"/>
+  
+  <!-- Flag pole -->
+  <rect x="170" y="86" width="16" height="340" fill="#333333"/>
+  
+  <!-- Red flag -->
+  <path d="M186 86 L373 86 L373 213 L280 160 L186 213 Z" fill="#dc2626"/>
+  
+  <!-- Flag shadow for depth -->
+  <path d="M186 86 L373 86 L373 213 L280 160 L186 213 Z" fill="#b91c1c" opacity="0.3" transform="translate(5,5)"/>
+</svg>

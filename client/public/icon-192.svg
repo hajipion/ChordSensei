@@ -1,0 +1,13 @@
+<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+  <!-- White background -->
+  <rect width="192" height="192" fill="#ffffff"/>
+  
+  <!-- Flag pole -->
+  <rect x="64" y="32" width="6" height="128" fill="#333333"/>
+  
+  <!-- Red flag -->
+  <path d="M70 32 L140 32 L140 80 L105 60 L70 80 Z" fill="#dc2626"/>
+  
+  <!-- Flag shadow for depth -->
+  <path d="M70 32 L140 32 L140 80 L105 60 L70 80 Z" fill="#b91c1c" opacity="0.3" transform="translate(2,2)"/>
+</svg>
