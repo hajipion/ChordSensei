@@ -123,8 +123,8 @@ export default function Home() {
         </div>
 
         {/* Chord Selection */}
-        <div className="flex-1">
-          <div className="grid grid-cols-2 gap-2 mb-6">
+        <div className="mb-6">
+          <div className="grid grid-cols-2 gap-2">
             {chordData.map((chord) => (
               <div
                 key={chord.japaneseName}
@@ -141,6 +141,9 @@ export default function Home() {
             ))}
           </div>
         </div>
+
+        {/* Spacer */}
+        <div className="flex-1"></div>
 
         {/* Controls Row */}
         <div className="mb-8 flex gap-4 items-center">
