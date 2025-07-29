@@ -203,7 +203,7 @@ export default function Home() {
           </div>
 
           {/* Start Button */}
-          <div>
+          <div className="mb-8">
             <Button 
               onClick={startTraining}
               disabled={createSessionMutation.isPending}
