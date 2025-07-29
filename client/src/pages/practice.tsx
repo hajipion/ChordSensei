@@ -163,7 +163,7 @@ export default function Practice({ params }: PracticeProps) {
           </div>
 
           {/* Bottom Section - Action Buttons */}
-          <div className="space-y-3">
+          <div className="space-y-1.5">
             {/* Play Button - only show if audio is enabled */}
             {audioEnabled && (
               <Button
@@ -176,7 +176,7 @@ export default function Practice({ params }: PracticeProps) {
             )}
             
             {/* Answer Buttons */}
-            <div className="grid grid-cols-2 gap-4 w-full">
+            <div className="grid grid-cols-2 gap-2 w-full">
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
@@ -190,7 +190,7 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black">○</div>
+                <div className="text-8xl leading-none font-black" style={{ strokeWidth: '4px', stroke: 'currentColor', fill: 'none' }}>○</div>
                 <span className="text-lg">せいかい</span>
               </Button>
             </div>
