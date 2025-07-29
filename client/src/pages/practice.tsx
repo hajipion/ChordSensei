@@ -193,7 +193,12 @@ export default function Practice({ params }: PracticeProps) {
                 <div 
                   className="text-8xl leading-none font-black"
                   style={{
-                    textShadow: '0 0 0 3px currentColor, 0 0 0 6px currentColor, 0 0 0 9px currentColor'
+                    textShadow: `
+                      0 0 0 8px currentColor, 0 0 0 16px currentColor, 0 0 0 24px currentColor,
+                      1px 0 0 8px currentColor, -1px 0 0 8px currentColor, 0 1px 0 8px currentColor, 0 -1px 0 8px currentColor,
+                      2px 0 0 8px currentColor, -2px 0 0 8px currentColor, 0 2px 0 8px currentColor, 0 -2px 0 8px currentColor,
+                      3px 0 0 8px currentColor, -3px 0 0 8px currentColor, 0 3px 0 8px currentColor, 0 -3px 0 8px currentColor
+                    `
                   }}
                 >
                   ○
