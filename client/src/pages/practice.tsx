@@ -191,14 +191,9 @@ export default function Practice({ params }: PracticeProps) {
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
                 <div 
-                  className="text-8xl leading-none font-black"
-                  style={{
-                    WebkitTextStroke: '8px currentColor',
-                    color: 'transparent'
-                  }}
-                >
-                  ○
-                </div>
+                  className="w-20 h-20 rounded-full border-8 border-gray-900"
+                  style={{ borderWidth: '8px' }}
+                ></div>
                 <span className="text-lg">せいかい</span>
               </Button>
             </div>
