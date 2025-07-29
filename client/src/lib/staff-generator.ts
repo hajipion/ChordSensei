@@ -74,9 +74,9 @@ export function generateStaffNotation(chord: ChordData): string {
         if (match && match[2]) { // If there's an accidental
           const accidental = match[2];
           if (accidental === '#') {
-            chordNote.addAccidental(index, new Accidental('#'));
+            chordNote.addModifier(new Accidental('#'), index);
           } else if (accidental === 'b') {
-            chordNote.addAccidental(index, new Accidental('b'));
+            chordNote.addModifier(new Accidental('b'), index);
           }
         }
       });
