@@ -182,8 +182,8 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black">✕</div>
-                <span className="text-lg">まちがい</span>
+                <div className="text-8xl leading-none font-black flex items-center justify-center" style={{ height: '80px' }}>✕</div>
+                <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center' }}>まちがい</span>
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
@@ -195,14 +195,14 @@ export default function Practice({ params }: PracticeProps) {
                   style={{ 
                     width: '80px', 
                     height: '80px', 
-                    borderWidth: '8px',
+                    borderWidth: '10px',
                     borderStyle: 'solid',
                     borderRadius: '50%',
                     minWidth: '80px',
                     minHeight: '80px'
                   }}
                 ></div>
-                <span className="text-lg">せいかい</span>
+                <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center' }}>せいかい</span>
               </Button>
             </div>
           </div>
