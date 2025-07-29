@@ -191,7 +191,7 @@ export default function Practice({ params }: PracticeProps) {
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
                 <div className="text-8xl leading-none font-black flex items-center justify-center">
-                  <svg width="1em" height="1em" viewBox="0 0 100 100" className="text-gray-900">
+                  <svg width="10em" height="10em" viewBox="0 0 100 100" className="text-gray-900">
                     <circle 
                       cx="50" 
                       cy="50" 
