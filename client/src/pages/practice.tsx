@@ -145,12 +145,12 @@ export default function Practice({ params }: PracticeProps) {
           <div className="flex-1 flex flex-col justify-center items-center space-y-6">
             {/* Color Flag */}
             <div className="flex justify-center">
-              <div className="w-20 h-20 rounded-full" style={{ backgroundColor: currentChord.color }}></div>
+              <div className="w-20 h-20 rounded-full practice-color-circle" style={{ backgroundColor: currentChord.color }}></div>
             </div>
 
             {/* Chord Content */}
             <div className="text-center">
-              <div className="text-5xl font-bold text-gray-900 mb-1">
+              <div className="text-5xl font-bold text-gray-900 mb-1 practice-chord-name">
                 <span style={{ letterSpacing: '0.25em' }}>{currentChord.japaneseName.slice(0, -1)}</span>
                 <span>{currentChord.japaneseName.slice(-1)}</span>
               </div>

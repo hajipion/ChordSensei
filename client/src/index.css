@@ -117,4 +117,14 @@
     margin-top: 1vh !important;
     margin-bottom: 3vh !important;
   }
+  
+  /* Practice screen chord name and color adjustments for small screens */
+  .practice-chord-name {
+    font-size: 2.5rem !important; /* Half of text-5xl (5rem -> 2.5rem) */
+  }
+  
+  .practice-color-circle {
+    width: 50px !important; /* Half of w-20 (80px -> 50px) */
+    height: 50px !important; /* Half of h-20 (80px -> 50px) */
+  }
 }
