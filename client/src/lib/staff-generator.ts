@@ -61,13 +61,24 @@ export function generateStaffNotation(chord: ChordData): string {
         return convertNoteToVexFlow(note);
       });
 
-
-      
       // Create a single chord note (all notes played simultaneously)
       const chordNote = new StaveNote({
         clef: "treble",
         keys: vexFlowNotes,
         duration: "w" // whole note
+      });
+
+      // Add accidentals for sharps and flats
+      chord.notes.forEach((note, index) => {
+        const match = note.match(/^([A-G])([#b]?)(\d)$/);
+        if (match && match[2]) { // If there's an accidental
+          const accidental = match[2];
+          if (accidental === '#') {
+            chordNote.addAccidental(index, new Accidental('#'));
+          } else if (accidental === 'b') {
+            chordNote.addAccidental(index, new Accidental('b'));
+          }
+        }
       });
 
       // Create voice and add the chord
