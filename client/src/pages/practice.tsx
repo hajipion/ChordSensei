@@ -182,7 +182,27 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black flex items-center justify-center" style={{ height: '80px', transform: 'translateY(-8px)' }}>✕</div>
+                {/* X icon made with divs */}
+                <div className="relative flex items-center justify-center" style={{ width: '53px', height: '53px' }}>
+                  <div 
+                    className="absolute bg-gray-900"
+                    style={{ 
+                      width: '53px', 
+                      height: '7px',
+                      transform: 'rotate(45deg)',
+                      borderRadius: '3.5px'
+                    }}
+                  ></div>
+                  <div 
+                    className="absolute bg-gray-900"
+                    style={{ 
+                      width: '53px', 
+                      height: '7px',
+                      transform: 'rotate(-45deg)',
+                      borderRadius: '3.5px'
+                    }}
+                  ></div>
+                </div>
                 <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center', lineHeight: '1.1em' }}>まちがい</span>
               </Button>
               <Button
@@ -190,16 +210,17 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
+                {/* Circle icon made with div */}
                 <div 
                   className="border-gray-900 flex-shrink-0"
                   style={{ 
-                    width: '80px', 
-                    height: '80px', 
-                    borderWidth: '10px',
+                    width: '53px', 
+                    height: '53px', 
+                    borderWidth: '7px',
                     borderStyle: 'solid',
                     borderRadius: '50%',
-                    minWidth: '80px',
-                    minHeight: '80px'
+                    minWidth: '53px',
+                    minHeight: '53px'
                   }}
                 ></div>
                 <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center', lineHeight: '1.1em' }}>せいかい</span>
