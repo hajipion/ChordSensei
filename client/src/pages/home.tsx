@@ -119,7 +119,7 @@ export default function Home() {
         
         {/* Title */}
         <div className="text-center" style={{ marginTop: '8vh', marginBottom: '6vh' }}>
-          <h1 className="text-3xl font-bold text-gray-900">絶対音感トレーニング</h1>
+          <h1 className="text-3xl font-bold text-gray-900 home-title">絶対音感トレーニング</h1>
         </div>
 
         {/* Content with equal spacing */}

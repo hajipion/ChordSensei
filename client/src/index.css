@@ -104,3 +104,12 @@
   .chord-gray { background-color: var(--chord-gray); }
   .chord-light-blue { background-color: var(--chord-light-blue); }
 }
+
+/* Small screen title adjustments */
+@media (max-height: 670px) {
+  .home-title {
+    font-size: 1.5rem !important; /* Half of text-3xl (3rem -> 1.5rem) */
+    margin-top: 1vh !important;
+    margin-bottom: 3vh !important;
+  }
+}
