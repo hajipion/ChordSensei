@@ -118,13 +118,7 @@ export default function Home() {
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
         
         {/* Title */}
-        <div 
-          className="text-center" 
-          style={{ 
-            marginTop: 'min(8vh, 20px)', 
-            marginBottom: 'min(6vh, 16px)' 
-          }}
-        >
+        <div className="text-center" style={{ marginTop: '8vh', marginBottom: '6vh' }}>
           <h1 className="text-3xl font-bold text-gray-900">絶対音感トレーニング</h1>
         </div>
 
@@ -151,7 +145,7 @@ export default function Home() {
           </div>
 
           {/* Controls Row */}
-          <div className="flex gap-4 items-center">
+          <div className="flex gap-4 items-center my-4">
             {/* Round Selection */}
             <div className="flex-1">
               <div className="flex items-center justify-center space-x-3">
