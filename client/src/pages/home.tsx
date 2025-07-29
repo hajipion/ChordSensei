@@ -118,13 +118,13 @@ export default function Home() {
       <div className="max-w-md mx-auto w-full flex-1 flex flex-col">
         
         {/* Title */}
-        <div className="text-center py-6">
+        <div className="text-center" style={{ marginTop: '8vh', marginBottom: '6vh' }}>
           <h1 className="text-3xl font-bold text-gray-900">絶対音感トレーニング</h1>
         </div>
 
         {/* Chord Selection */}
-        <div className="mb-6">
-          <div className="grid grid-cols-2 gap-2">
+        <div className="flex-1">
+          <div className="grid grid-cols-2 gap-2 mb-6">
             {chordData.map((chord) => (
               <div
                 key={chord.japaneseName}
@@ -200,14 +200,16 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Start Button */}
-        <Button 
-          onClick={startTraining}
-          disabled={createSessionMutation.isPending}
-          className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-9 px-6 rounded-lg text-xl transition-colors tracking-wider"
-        >
-          {createSessionMutation.isPending ? "準備中..." : "トレーニング開始"}
-        </Button>
+        {/* Start Button - Fixed at bottom */}
+        <div className="mt-auto">
+          <Button 
+            onClick={startTraining}
+            disabled={createSessionMutation.isPending}
+            className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-9 px-6 rounded-lg text-xl transition-colors tracking-wider"
+          >
+            {createSessionMutation.isPending ? "準備中..." : "トレーニング開始"}
+          </Button>
+        </div>
       </div>
     </div>
   );
