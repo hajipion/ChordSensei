@@ -182,7 +182,7 @@ export default function Practice({ params }: PracticeProps) {
                 disabled={answerMutation.isPending}
                 className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black flex items-center justify-center" style={{ height: '80px' }}>✕</div>
+                <div className="text-8xl leading-none font-black flex items-center justify-center" style={{ height: '80px', transform: 'translateY(-8px)' }}>✕</div>
                 <span className="text-lg" style={{ height: '28px', display: 'flex', alignItems: 'center' }}>まちがい</span>
               </Button>
               <Button
