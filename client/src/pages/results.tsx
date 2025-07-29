@@ -84,7 +84,7 @@ export default function Results({ params }: ResultsProps) {
         </div>
 
         {/* Fixed Bottom Button */}
-        <div className="fixed bottom-8 left-0 right-0 p-4 bg-white border-t">
+        <div className="fixed bottom-0 left-0 right-0 pt-4 px-4 pb-8 bg-white border-t">
           <div className="max-w-md mx-auto">
             <Button 
               onClick={returnHome}
