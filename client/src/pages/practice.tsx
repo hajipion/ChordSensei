@@ -81,7 +81,8 @@ export default function Practice({ params }: PracticeProps) {
     const availableChords = Array.isArray(sessionData.selectedChords) 
       ? sessionData.selectedChords 
       : [];
-    const nextChord = getRandomChord(availableChords);
+    const chordHistory = Array.isArray(sessionData.chordHistory) ? sessionData.chordHistory : [];
+    const nextChord = getRandomChord(availableChords, chordHistory);
     setCurrentChord(nextChord || null);
     
     // Play chord sound automatically when a new chord is generated (only if audio is enabled)
@@ -179,7 +180,7 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-8 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[135px]"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
                 <div className="text-8xl leading-none font-black">✕</div>
                 <span className="text-lg">まちがい</span>
@@ -187,9 +188,9 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-8 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[135px]"
+                className="bg-gray-200 hover:bg-gray-300 text-gray-900 font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px]"
               >
-                <div className="text-8xl leading-none font-black">●</div>
+                <div className="text-8xl leading-none font-black">○</div>
                 <span className="text-lg">せいかい</span>
               </Button>
             </div>

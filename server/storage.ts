@@ -18,8 +18,13 @@ export class MemStorage implements IStorage {
   async createSession(insertSession: InsertSession): Promise<Session> {
     const id = randomUUID();
     const session: Session = {
-      ...insertSession,
       id,
+      selectedChords: insertSession.selectedChords,
+      totalRounds: insertSession.totalRounds,
+      currentRound: 1,
+      results: [],
+      chordHistory: [],
+      isCompleted: false,
       createdAt: new Date().toISOString(),
     };
     this.sessions.set(id, session);
@@ -37,9 +42,13 @@ export class MemStorage implements IStorage {
     const results = Array.isArray(session.results) ? session.results : [];
     results.push(result);
 
+    const chordHistory = Array.isArray(session.chordHistory) ? session.chordHistory : [];
+    chordHistory.push(result.chordName);
+
     const updatedSession: Session = {
       ...session,
       results,
+      chordHistory,
       currentRound: session.currentRound + 1,
     };
 

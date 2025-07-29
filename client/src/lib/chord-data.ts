@@ -24,13 +24,34 @@ export function getChordByName(japaneseName: string): ChordData | undefined {
   return chordData.find(chord => chord.japaneseName === japaneseName);
 }
 
-export function getRandomChord(availableChords: string[]): ChordData | undefined {
+export function getRandomChord(availableChords: string[], previousChords: string[] = []): ChordData | undefined {
   const filteredChords = chordData.filter(chord => 
     availableChords.includes(chord.japaneseName)
   );
   
   if (filteredChords.length === 0) return undefined;
   
+  // 最後の2つの音が同じ場合、3回連続を防ぐ
+  const lastTwo = previousChords.slice(-2);
+  if (lastTwo.length === 2 && lastTwo[0] === lastTwo[1]) {
+    const excludeSame = filteredChords.filter(chord => chord.japaneseName !== lastTwo[1]);
+    if (excludeSame.length > 0) {
+      const randomIndex = Math.floor(Math.random() * excludeSame.length);
+      return excludeSame[randomIndex];
+    }
+  }
+  
+  // 直前の音と同じものを選ぶ確率を下げる（30%の確率で除外）
+  const lastChord = previousChords[previousChords.length - 1];
+  if (lastChord && Math.random() < 0.7) {
+    const excludeLast = filteredChords.filter(chord => chord.japaneseName !== lastChord);
+    if (excludeLast.length > 0) {
+      const randomIndex = Math.floor(Math.random() * excludeLast.length);
+      return excludeLast[randomIndex];
+    }
+  }
+  
+  // 通常のランダム選択
   const randomIndex = Math.floor(Math.random() * filteredChords.length);
   return filteredChords[randomIndex];
 }

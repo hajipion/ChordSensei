@@ -9,6 +9,7 @@ export const sessions = pgTable("sessions", {
   totalRounds: integer("total_rounds").notNull(),
   currentRound: integer("current_round").notNull().default(1),
   results: jsonb("results").notNull().default('[]'),
+  chordHistory: jsonb("chord_history").notNull().default('[]'),
   isCompleted: boolean("is_completed").notNull().default(false),
   createdAt: text("created_at").notNull().default(sql`now()`),
 });
