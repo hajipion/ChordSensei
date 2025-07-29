@@ -176,7 +176,7 @@ export default function Practice({ params }: PracticeProps) {
             {audioEnabled && (
               <Button
                 onClick={() => playChordSound(currentChord)}
-                className="w-full bg-gray-200 hover:bg-gray-400 active:bg-gray-500 text-gray-900 font-bold py-6 px-4 rounded-lg transition-colors flex items-center justify-center min-h-[90px]"
+                className="w-full bg-gray-200 active:bg-gray-500 text-gray-900 font-bold py-6 px-4 rounded-lg transition-none flex items-center justify-center min-h-[90px] focus:opacity-100 disabled:opacity-100"
               >
                 <Play className="w-6 h-6 mr-1" />
                 <span className="text-lg">リプレイ</span>
@@ -188,12 +188,12 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(false)}
                 disabled={answerMutation.isPending}
-                className="group bg-gray-200 hover:bg-red-400 active:bg-red-500 text-gray-900 hover:text-white active:text-white font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px] gap-2"
+                className="group bg-gray-200 active:bg-red-500 text-gray-900 active:text-white font-bold py-12 px-2 rounded-lg transition-none flex flex-col items-center justify-center min-h-[160px] gap-2 focus:opacity-100 disabled:opacity-100"
               >
                 {/* X icon made with divs */}
                 <div className="relative flex items-center justify-center flex-shrink-0" style={{ width: '53px', height: '53px' }}>
                   <div 
-                    className="absolute bg-gray-900 group-hover:bg-white group-active:bg-white transition-colors"
+                    className="absolute bg-gray-900 group-active:bg-white transition-none"
                     style={{ 
                       width: '53px', 
                       height: '7px',
@@ -202,7 +202,7 @@ export default function Practice({ params }: PracticeProps) {
                     }}
                   ></div>
                   <div 
-                    className="absolute bg-gray-900 group-hover:bg-white group-active:bg-white transition-colors"
+                    className="absolute bg-gray-900 group-active:bg-white transition-none"
                     style={{ 
                       width: '53px', 
                       height: '7px',
@@ -216,11 +216,11 @@ export default function Practice({ params }: PracticeProps) {
               <Button
                 onClick={() => handleAnswer(true)}
                 disabled={answerMutation.isPending}
-                className="group bg-gray-200 hover:bg-green-400 active:bg-green-500 text-gray-900 hover:text-white active:text-white font-bold py-12 px-2 rounded-lg transition-colors flex flex-col items-center justify-center min-h-[160px] gap-2"
+                className="group bg-gray-200 active:bg-green-500 text-gray-900 active:text-white font-bold py-12 px-2 rounded-lg transition-none flex flex-col items-center justify-center min-h-[160px] gap-2 focus:opacity-100 disabled:opacity-100"
               >
                 {/* Circle icon made with div */}
                 <div 
-                  className="border-gray-900 group-hover:border-white group-active:border-white transition-colors flex-shrink-0"
+                  className="border-gray-900 group-active:border-white transition-none flex-shrink-0"
                   style={{ 
                     width: '53px', 
                     height: '53px', 
