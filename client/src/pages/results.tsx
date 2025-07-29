@@ -50,12 +50,12 @@ export default function Results({ params }: ResultsProps) {
       <div className="max-w-md mx-auto w-full pb-24">
         {/* Header */}
         <div className="text-center py-6">
-          <h1 className="text-3xl font-mono font-bold text-gray-900 mb-4">結果</h1>
-          <div className="text-6xl font-mono font-bold text-green-600 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">結果</h1>
+          <div className="text-6xl font-bold text-green-600 mb-2">
             {correctAnswers}/{session.totalRounds}
           </div>
           <div className="text-lg text-gray-600">
-            正解率 <span className="font-mono font-semibold">{accuracy}</span>%
+            正解率 <span className="font-semibold">{accuracy}</span>%
           </div>
         </div>
 
@@ -73,9 +73,9 @@ export default function Results({ params }: ResultsProps) {
                 </div>
                 <div className="w-8 h-8 rounded-full mr-3" style={{ backgroundColor: result.color }}></div>
                 <div className="flex-1">
-                  <div className="font-mono font-medium text-gray-900">{result.chordName}</div>
+                  <div className="font-medium text-gray-900">{result.chordName}</div>
                 </div>
-                <div className="text-sm font-mono text-gray-500">
+                <div className="text-sm text-gray-500">
                   第{result.roundNumber}問
                 </div>
               </div>
@@ -88,7 +88,7 @@ export default function Results({ params }: ResultsProps) {
           <div className="max-w-md mx-auto">
             <Button 
               onClick={returnHome}
-              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-mono font-bold py-6 px-6 rounded-lg text-lg transition-colors"
+              className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-6 px-6 rounded-lg text-lg transition-colors"
             >
               ホームに戻る
             </Button>
