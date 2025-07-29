@@ -45,11 +45,14 @@ export class MemStorage implements IStorage {
     const chordHistory = Array.isArray(session.chordHistory) ? session.chordHistory : [];
     chordHistory.push(result.chordName);
 
+    // Only increment round if we haven't reached the total rounds yet
+    const newCurrentRound = Math.min(session.currentRound + 1, session.totalRounds + 1);
+
     const updatedSession: Session = {
       ...session,
       results,
       chordHistory,
-      currentRound: session.currentRound + 1,
+      currentRound: newCurrentRound,
     };
 
     this.sessions.set(id, updatedSession);

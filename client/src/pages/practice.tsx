@@ -49,10 +49,10 @@ export default function Practice({ params }: PracticeProps) {
     },
     onSuccess: (updatedSession) => {
       if (updatedSession.currentRound > updatedSession.totalRounds) {
-        // Complete session and go to results immediately without updating UI
+        // Complete session and go to results
         completeMutation.mutate();
       } else {
-        // Only update UI if not completed
+        // Update UI and continue to next round
         queryClient.setQueryData(["/api/sessions", params.sessionId], updatedSession);
         generateNextChord(updatedSession);
       }
