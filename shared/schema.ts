@@ -6,6 +6,7 @@ import { z } from "zod";
 export const sessions = pgTable("sessions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   selectedChords: jsonb("selected_chords").notNull(),
+  chordSequence: jsonb("chord_sequence").notNull().default('[]'), // Pre-generated balanced sequence
   totalRounds: integer("total_rounds").notNull(),
   currentRound: integer("current_round").notNull().default(1),
   results: jsonb("results").notNull().default('[]'),

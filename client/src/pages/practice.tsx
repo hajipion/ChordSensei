@@ -6,7 +6,7 @@ import { ChordFlag } from "@/components/chord-flag";
 import { StaffNotation } from "@/components/staff-notation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
-import { getRandomChord } from "@/lib/chord-data";
+import { getChordByName } from "@/lib/chord-data";
 import { type Session, type ChordData } from "@shared/schema";
 import { X, Circle, Play } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -86,19 +86,24 @@ export default function Practice({ params }: PracticeProps) {
   });
 
   const generateNextChord = (sessionData: Session) => {
-    const availableChords = Array.isArray(sessionData.selectedChords) 
-      ? sessionData.selectedChords 
-      : [];
-    const chordHistory = Array.isArray(sessionData.chordHistory) ? sessionData.chordHistory : [];
-    const nextChord = getRandomChord(availableChords, chordHistory);
-    setCurrentChord(nextChord || null);
+    // Use pre-generated chord sequence instead of random generation
+    const chordSequence = Array.isArray(sessionData.chordSequence) ? sessionData.chordSequence : [];
+    const currentIndex = sessionData.currentRound - 1; // 0-based index
     
-    // Play chord sound automatically when a new chord is generated (only if audio is enabled)
-    if (nextChord && audioEnabled) {
-      setTimeout(async () => {
-        await audioEngine.initialize(); // Initialize first to load samples
-        await playChordSound(nextChord);
-      }, 800); // Slightly longer delay to allow sample loading
+    if (currentIndex < chordSequence.length) {
+      const nextChordName = chordSequence[currentIndex];
+      const nextChord = getChordByName(nextChordName);
+      setCurrentChord(nextChord || null);
+      
+      // Play chord sound automatically when a new chord is generated (only if audio is enabled)
+      if (nextChord && audioEnabled) {
+        setTimeout(async () => {
+          await audioEngine.initialize(); // Initialize first to load samples
+          await playChordSound(nextChord);
+        }, 800); // Slightly longer delay to allow sample loading
+      }
+    } else {
+      setCurrentChord(null);
     }
   };
 

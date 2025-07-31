@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Minus, Plus, Volume2, VolumeX } from "lucide-react";
 
-import { chordData } from "@/lib/chord-data";
+import { chordData, generateBalancedChordSequence } from "@/lib/chord-data";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function Home() {
   const [, setLocation] = useLocation();
   const [selectedChords, setSelectedChords] = useState<string[]>(["ドミソ"]);
-  const [selectedRounds, setSelectedRounds] = useState(10);
+  const [selectedRounds, setSelectedRounds] = useState(5);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const { toast } = useToast();
 
@@ -46,8 +46,12 @@ export default function Home() {
 
   const createSessionMutation = useMutation({
     mutationFn: async (data: { selectedChords: string[]; totalRounds: number }) => {
+      // Generate balanced chord sequence
+      const chordSequence = generateBalancedChordSequence(data.selectedChords, data.totalRounds);
+      
       const response = await apiRequest("POST", "/api/sessions", {
         selectedChords: data.selectedChords,
+        chordSequence: chordSequence,
         totalRounds: data.totalRounds,
         currentRound: 1,
         results: [],
@@ -84,11 +88,11 @@ export default function Home() {
   };
 
   const incrementRounds = () => {
-    setSelectedRounds(prev => Math.min(prev + 1, 20));
+    setSelectedRounds(prev => Math.min(prev + 1, 100));
   };
 
   const decrementRounds = () => {
-    setSelectedRounds(prev => Math.max(prev - 1, 5));
+    setSelectedRounds(prev => Math.max(prev - 1, 1));
   };
 
   const startTraining = () => {
@@ -151,7 +155,7 @@ export default function Home() {
                   size="icon"
                   className="w-8 h-8 rounded-full border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
                   onClick={decrementRounds}
-                  disabled={selectedRounds <= 5}
+                  disabled={selectedRounds <= 1}
                 >
                   <Minus className="h-3 w-3" />
                 </Button>
@@ -163,7 +167,7 @@ export default function Home() {
                   size="icon"
                   className="w-8 h-8 rounded-full border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white"
                   onClick={incrementRounds}
-                  disabled={selectedRounds >= 20}
+                  disabled={selectedRounds >= 100}
                 >
                   <Plus className="h-3 w-3" />
                 </Button>

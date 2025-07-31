@@ -24,6 +24,57 @@ export function getChordByName(japaneseName: string): ChordData | undefined {
   return chordData.find(chord => chord.japaneseName === japaneseName);
 }
 
+// Generate a balanced chord sequence that ensures even distribution
+export function generateBalancedChordSequence(availableChords: string[], totalRounds: number): string[] {
+  if (availableChords.length === 0) return [];
+  
+  const sequence: string[] = [];
+  
+  // If we have fewer rounds than chords, just return a shuffled subset
+  if (totalRounds <= availableChords.length) {
+    const shuffled = [...availableChords].sort(() => Math.random() - 0.5);
+    return shuffled.slice(0, totalRounds);
+  }
+  
+  // Calculate how many times each chord should appear (at least once)
+  const baseCount = Math.floor(totalRounds / availableChords.length);
+  const remainder = totalRounds % availableChords.length;
+  
+  // Create distribution array
+  const distribution: { chord: string; count: number }[] = availableChords.map((chord, index) => ({
+    chord,
+    count: baseCount + (index < remainder ? 1 : 0)
+  }));
+  
+  // Build the sequence ensuring even distribution
+  for (const { chord, count } of distribution) {
+    for (let i = 0; i < count; i++) {
+      sequence.push(chord);
+    }
+  }
+  
+  // Shuffle the sequence to randomize order
+  for (let i = sequence.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+  }
+  
+  // Post-process to avoid 3 consecutive identical chords
+  for (let i = 2; i < sequence.length; i++) {
+    if (sequence[i] === sequence[i-1] && sequence[i-1] === sequence[i-2]) {
+      // Find a different chord to swap with
+      for (let j = i + 1; j < sequence.length; j++) {
+        if (sequence[j] !== sequence[i]) {
+          [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+          break;
+        }
+      }
+    }
+  }
+  
+  return sequence;
+}
+
 export function getRandomChord(availableChords: string[], previousChords: string[] = []): ChordData | undefined {
   const filteredChords = chordData.filter(chord => 
     availableChords.includes(chord.japaneseName)

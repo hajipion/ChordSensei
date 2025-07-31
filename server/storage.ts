@@ -20,6 +20,7 @@ export class MemStorage implements IStorage {
     const session: Session = {
       id,
       selectedChords: insertSession.selectedChords,
+      chordSequence: insertSession.chordSequence || [],
       totalRounds: insertSession.totalRounds,
       currentRound: 1,
       results: [],
