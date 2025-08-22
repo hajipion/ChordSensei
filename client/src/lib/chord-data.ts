@@ -59,14 +59,34 @@ export function generateBalancedChordSequence(availableChords: string[], totalRo
     [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
   }
   
-  // Post-process to avoid 3 consecutive identical chords
-  for (let i = 2; i < sequence.length; i++) {
-    if (sequence[i] === sequence[i-1] && sequence[i-1] === sequence[i-2]) {
-      // Find a different chord to swap with
+  // Enhanced post-processing to prevent consecutive duplicate chords
+  for (let i = 1; i < sequence.length; i++) {
+    if (sequence[i] === sequence[i-1]) {
+      // Find a different chord to swap with that won't create new consecutive duplicates
+      let swapped = false;
       for (let j = i + 1; j < sequence.length; j++) {
-        if (sequence[j] !== sequence[i]) {
+        const candidate = sequence[j];
+        if (candidate !== sequence[i] && 
+            candidate !== sequence[i-1] && 
+            (j === sequence.length - 1 || candidate !== sequence[j+1]) &&
+            (i === sequence.length - 1 || candidate !== sequence[i+1])) {
           [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+          swapped = true;
           break;
+        }
+      }
+      
+      // If we couldn't find a good swap candidate, try swapping backwards
+      if (!swapped) {
+        for (let j = 0; j < i - 1; j++) {
+          const candidate = sequence[j];
+          if (candidate !== sequence[i] && 
+              candidate !== sequence[i-1] &&
+              (j === 0 || candidate !== sequence[j-1]) &&
+              candidate !== sequence[j+1]) {
+            [sequence[i], sequence[j]] = [sequence[j], sequence[i]];
+            break;
+          }
         }
       }
     }
