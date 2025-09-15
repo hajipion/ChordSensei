@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 export default function Home() {
   const [, setLocation] = useLocation();
   const [selectedChords, setSelectedChords] = useState<string[]>(["ドミソ"]);
-  const [selectedRounds, setSelectedRounds] = useState(10);
+  const [selectedRounds, setSelectedRounds] = useState(15);
   const [audioEnabled, setAudioEnabled] = useState(false);
   const { toast } = useToast();
 

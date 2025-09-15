@@ -15,7 +15,7 @@ export const chordData: ChordData[] = [
   // 黒鍵の5個の和音の基本形（表1参照）
   { name: "A", japaneseName: "ラド#ミ", color: "#84cc16", notes: ["A3", "C#4", "E4"] },
   { name: "D", japaneseName: "レファ#ラ", color: "#f4a460", notes: ["D4", "F#4", "A4"] },
-  { name: "E", japaneseName: "ミソ#シ", color: "#8b5cf6", notes: ["E4", "G#4", "B4"] },
+  { name: "E", japaneseName: "ミソ#シ", color: "#DDA0DD", notes: ["E4", "G#4", "B4"] },
   { name: "Bb", japaneseName: "シ♭レファ", color: "#6b7280", notes: ["Bb3", "D4", "F4"] },
   { name: "Eb", japaneseName: "ミ♭ソシ♭", color: "#06b6d4", notes: ["Eb4", "G4", "Bb4"] }
 ];

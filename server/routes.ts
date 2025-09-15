@@ -32,11 +32,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Update session with answer result
   app.post("/api/sessions/:id/answer", async (req, res) => {
     try {
-      console.log("Answer request received:", {
-        sessionId: req.params.id,
-        body: req.body
-      });
-      
       const resultSchema = z.object({
         chordName: z.string(),
         color: z.string(),
@@ -45,19 +40,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       const result = resultSchema.parse(req.body);
-      console.log("Parsed result:", result);
-      
       const session = await storage.updateSessionResult(req.params.id, result);
       
       if (!session) {
-        console.error("Session not found:", req.params.id);
         return res.status(404).json({ error: "Session not found" });
       }
       
-      console.log("Session updated successfully:", session);
       res.json(session);
     } catch (error) {
-      console.error("Answer API error:", error);
       res.status(400).json({ error: "Invalid result data" });
     }
   });

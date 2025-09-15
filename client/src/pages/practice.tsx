@@ -42,17 +42,7 @@ export default function Practice({ params }: PracticeProps) {
 
   const answerMutation = useMutation({
     mutationFn: async (isCorrect: boolean) => {
-      if (!currentChord || !session) {
-        console.error("Missing data:", { currentChord: !!currentChord, session: !!session });
-        throw new Error("Missing chord or session data");
-      }
-      
-      console.log("Sending answer:", {
-        chordName: currentChord.japaneseName,
-        color: currentChord.color,
-        isCorrect,
-        roundNumber: session.currentRound,
-      });
+      if (!currentChord || !session) return;
       
       const response = await apiRequest("POST", `/api/sessions/${params.sessionId}/answer`, {
         chordName: currentChord.japaneseName,
@@ -63,7 +53,6 @@ export default function Practice({ params }: PracticeProps) {
       return response.json();
     },
     onSuccess: (updatedSession) => {
-      console.log("Answer recorded successfully:", updatedSession);
       // Always update the session data first
       queryClient.setQueryData(["/api/sessions", params.sessionId], updatedSession);
       
@@ -75,8 +64,7 @@ export default function Practice({ params }: PracticeProps) {
         generateNextChord(updatedSession);
       }
     },
-    onError: (error) => {
-      console.error("Answer mutation error:", error);
+    onError: () => {
       toast({
         title: "エラー",
         description: "回答の記録に失敗しました",
