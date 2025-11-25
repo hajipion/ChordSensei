@@ -41,7 +41,7 @@ function renderChordNameWithFurigana(japaneseName: string) {
         result.push(
           <ruby key={key++} style={{ rubyPosition: 'over' }}>
             {pattern}
-            <rt style={{ fontSize: '0.4em', fontWeight: 'normal' }}>{reading}</rt>
+            <rt style={{ fontSize: '0.4em', fontWeight: 'normal', transform: 'translateY(-0.3em)', display: 'inline-block' }}>{reading}</rt>
           </ruby>
         );
         remaining = remaining.slice(pattern.length);
