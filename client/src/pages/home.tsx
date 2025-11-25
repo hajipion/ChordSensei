@@ -22,11 +22,29 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Migration map for old chord names to new chord names
+  const chordNameMigration: Record<string, string> = {
+    "ラド#ミ": "ラツィスミ",
+    "レファ#ラ": "レフィスラ",
+    "ミソ#シ": "ミギスシ",
+    "シ♭レファ": "ベーレファ",
+    "ミ♭ソシ♭": "エスソベー",
+  };
+
   // Load saved settings from localStorage
   useEffect(() => {
     const savedChords = localStorage.getItem("selectedChords");
     if (savedChords) {
-      setSelectedChords(JSON.parse(savedChords));
+      const parsedChords: string[] = JSON.parse(savedChords);
+      // Migrate old chord names to new names
+      const migratedChords = parsedChords.map(name => chordNameMigration[name] || name);
+      // Filter to only include valid chord names that exist in chordData
+      const validChordNames = chordData.map(c => c.japaneseName);
+      const filteredChords = migratedChords.filter(name => validChordNames.includes(name));
+      // If no valid chords after filtering, use default
+      if (filteredChords.length > 0) {
+        setSelectedChords(filteredChords);
+      }
     }
     
     const savedAudio = localStorage.getItem("audioEnabled");
