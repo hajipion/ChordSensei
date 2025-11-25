@@ -22,13 +22,13 @@ export default function Home() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Migration map for old chord names to new chord names
+  // Migration map for old chord names to new chord names (reverse migration)
   const chordNameMigration: Record<string, string> = {
-    "ラド#ミ": "ラツィスミ",
-    "レファ#ラ": "レフィスラ",
-    "ミソ#シ": "ミギスシ",
-    "シ♭レファ": "ベーレファ",
-    "ミ♭ソシ♭": "エスソベー",
+    "ラツィスミ": "ラド#ミ",
+    "レフィスラ": "レファ#ラ",
+    "ミギスシ": "ミソ#シ",
+    "ベーレファ": "シ♭レファ",
+    "エスソベー": "ミ♭ソシ♭",
   };
 
   // Load saved settings from localStorage

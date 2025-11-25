@@ -16,6 +16,50 @@ interface PracticeProps {
   params: { sessionId: string };
 }
 
+// Render chord name with furigana for accidentals
+function renderChordNameWithFurigana(japaneseName: string) {
+  // Map accidentals to their furigana readings
+  const furiganaMap: Record<string, string> = {
+    "ド#": "ツィス",
+    "ファ#": "フィス",
+    "ソ#": "ギス",
+    "シ♭": "ベー",
+    "ミ♭": "エス",
+  };
+  
+  // Find and replace accidentals with ruby annotations
+  let result: JSX.Element[] = [];
+  let remaining = japaneseName;
+  let key = 0;
+  
+  while (remaining.length > 0) {
+    let found = false;
+    
+    // Check for each accidental pattern
+    for (const [pattern, reading] of Object.entries(furiganaMap)) {
+      if (remaining.startsWith(pattern)) {
+        result.push(
+          <ruby key={key++} style={{ rubyPosition: 'over' }}>
+            {pattern}
+            <rt style={{ fontSize: '0.4em', fontWeight: 'normal' }}>{reading}</rt>
+          </ruby>
+        );
+        remaining = remaining.slice(pattern.length);
+        found = true;
+        break;
+      }
+    }
+    
+    // If no accidental found, add the next character
+    if (!found) {
+      result.push(<span key={key++}>{remaining[0]}</span>);
+      remaining = remaining.slice(1);
+    }
+  }
+  
+  return result;
+}
+
 export default function Practice({ params }: PracticeProps) {
   const [, setLocation] = useLocation();
   const [currentChord, setCurrentChord] = useState<ChordData | null>(null);
@@ -163,9 +207,8 @@ export default function Practice({ params }: PracticeProps) {
 
             {/* Chord Content */}
             <div className="text-center">
-              <div className="text-5xl font-bold text-gray-900 mb-1 practice-chord-name">
-                <span style={{ letterSpacing: '0.25em' }}>{currentChord.japaneseName.slice(0, -1)}</span>
-                <span>{currentChord.japaneseName.slice(-1)}</span>
+              <div className="text-5xl font-bold text-gray-900 mb-1 practice-chord-name" style={{ letterSpacing: '0.15em' }}>
+                {renderChordNameWithFurigana(currentChord.japaneseName)}
               </div>
               
               {/* Staff Notation */}
