@@ -1,11 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 
-import { useQuery } from "@tanstack/react-query";
-import { type Session, type ChordResult } from "@shared/schema";
-import { X, Circle, Check } from "lucide-react";
+import { getSession, type ClientSession } from "@/lib/session-store";
+import { type ChordResult } from "@shared/schema";
+import { X, Circle } from "lucide-react";
 
 interface ResultsProps {
   params: { sessionId: string };
@@ -13,25 +12,18 @@ interface ResultsProps {
 
 export default function Results({ params }: ResultsProps) {
   const [, setLocation] = useLocation();
+  const [session, setSession] = useState<ClientSession | null>(null);
 
   // Reset scroll position on page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const { data: session, isLoading } = useQuery<Session>({
-    queryKey: ["/api/sessions", params.sessionId],
-    staleTime: 0, // Always fetch fresh data
-    refetchOnMount: true,
-  });
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">読み込み中...</div>
-      </div>
-    );
-  }
+  // Load session from store
+  useEffect(() => {
+    const s = getSession(params.sessionId);
+    if (s) setSession({ ...s });
+  }, [params.sessionId]);
 
   if (!session) {
     return (

@@ -1,15 +1,11 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { ChordFlag } from "@/components/chord-flag";
 import { StaffNotation } from "@/components/staff-notation";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { getChordByName } from "@/lib/chord-data";
-import { type Session, type ChordData } from "@shared/schema";
-import { X, Circle, Play } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { getSession, updateSessionResult, completeSession, type ClientSession } from "@/lib/session-store";
+import { type ChordData } from "@shared/schema";
+import { Play } from "lucide-react";
 import { audioEngine } from "@/lib/audio-engine";
 
 interface PracticeProps {
@@ -62,10 +58,9 @@ function renderChordNameWithFurigana(japaneseName: string) {
 
 export default function Practice({ params }: PracticeProps) {
   const [, setLocation] = useLocation();
+  const [session, setSession] = useState<ClientSession | null>(null);
   const [currentChord, setCurrentChord] = useState<ChordData | null>(null);
   const [audioEnabled, setAudioEnabled] = useState(false);
-  const queryClient = useQueryClient();
-  const { toast } = useToast();
 
   // Reset scroll position on page load
   useEffect(() => {
@@ -80,56 +75,34 @@ export default function Practice({ params }: PracticeProps) {
     }
   }, []);
 
-  const { data: session, isLoading } = useQuery<Session>({
-    queryKey: ["/api/sessions", params.sessionId],
-  });
+  // Load session from store
+  useEffect(() => {
+    const s = getSession(params.sessionId);
+    if (s) setSession({ ...s });
+  }, [params.sessionId]);
 
-  const answerMutation = useMutation({
-    mutationFn: async (isCorrect: boolean) => {
-      if (!currentChord || !session) return;
-      
-      const response = await apiRequest("POST", `/api/sessions/${params.sessionId}/answer`, {
-        chordName: currentChord.japaneseName,
-        color: currentChord.color,
-        isCorrect,
-        roundNumber: session.currentRound,
-      });
-      return response.json();
-    },
-    onSuccess: (updatedSession) => {
-      // Always update the session data first
-      queryClient.setQueryData(["/api/sessions", params.sessionId], updatedSession);
-      
-      if (updatedSession && updatedSession.currentRound > updatedSession.totalRounds) {
-        // Complete session and go to results
-        completeMutation.mutate();
-      } else if (updatedSession) {
-        // Continue to next round
-        generateNextChord(updatedSession);
-      }
-    },
-    onError: () => {
-      toast({
-        title: "エラー",
-        description: "回答の記録に失敗しました",
-        variant: "destructive",
-      });
-    },
-  });
+  const handleAnswer = (isCorrect: boolean) => {
+    if (!currentChord || !session) return;
 
-  const completeMutation = useMutation({
-    mutationFn: async () => {
-      const response = await apiRequest("POST", `/api/sessions/${params.sessionId}/complete`);
-      return response.json();
-    },
-    onSuccess: (completedSession) => {
-      // Ensure the latest session data is cached before navigation
-      queryClient.setQueryData(["/api/sessions", params.sessionId], completedSession);
+    const updated = updateSessionResult(params.sessionId, {
+      chordName: currentChord.japaneseName,
+      color: currentChord.color,
+      isCorrect,
+      roundNumber: session.currentRound,
+    });
+
+    if (!updated) return;
+
+    if (updated.currentRound > updated.totalRounds) {
+      completeSession(params.sessionId);
       setLocation(`/results/${params.sessionId}`);
-    },
-  });
+    } else {
+      setSession({ ...updated });
+      generateNextChord(updated);
+    }
+  };
 
-  const generateNextChord = (sessionData: Session) => {
+  const generateNextChord = (sessionData: ClientSession) => {
     // Use pre-generated chord sequence instead of random generation
     const chordSequence = Array.isArray(sessionData.chordSequence) ? sessionData.chordSequence : [];
     const currentIndex = sessionData.currentRound - 1; // 0-based index
@@ -165,18 +138,6 @@ export default function Practice({ params }: PracticeProps) {
       console.error("Failed to play chord sound:", error);
     }
   };
-
-  const handleAnswer = (isCorrect: boolean) => {
-    answerMutation.mutate(isCorrect);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-lg">読み込み中...</div>
-      </div>
-    );
-  }
 
   if (!session || !currentChord) {
     return (
@@ -235,7 +196,7 @@ export default function Practice({ params }: PracticeProps) {
             <div className="grid grid-cols-2 gap-4 w-full">
               <Button
                 onClick={() => handleAnswer(false)}
-                disabled={answerMutation.isPending}
+                disabled={false}
                 className="group bg-gray-200 active:bg-red-500 text-gray-900 active:text-white font-bold py-12 px-2 rounded-lg transition-none flex flex-col items-center justify-center min-h-[160px] gap-2 focus:opacity-100 disabled:opacity-100"
               >
                 {/* X icon made with divs */}
@@ -263,7 +224,7 @@ export default function Practice({ params }: PracticeProps) {
               </Button>
               <Button
                 onClick={() => handleAnswer(true)}
-                disabled={answerMutation.isPending}
+                disabled={false}
                 className="group bg-gray-200 active:bg-green-500 text-gray-900 active:text-white font-bold py-12 px-2 rounded-lg transition-none flex flex-col items-center justify-center min-h-[160px] gap-2 focus:opacity-100 disabled:opacity-100"
               >
                 {/* Circle icon made with div */}
