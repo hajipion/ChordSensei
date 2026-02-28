@@ -6,8 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Minus, Plus, Volume2, VolumeX } from "lucide-react";
 
 import { chordData, generateBalancedChordSequence } from "@/lib/chord-data";
-import { useMutation } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
+import { createSession } from "@/lib/session-store";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Home() {
@@ -62,32 +61,7 @@ export default function Home() {
     localStorage.setItem("audioEnabled", JSON.stringify(audioEnabled));
   }, [audioEnabled]);
 
-  const createSessionMutation = useMutation({
-    mutationFn: async (data: { selectedChords: string[]; totalRounds: number }) => {
-      // Generate balanced chord sequence
-      const chordSequence = generateBalancedChordSequence(data.selectedChords, data.totalRounds);
-      
-      const response = await apiRequest("POST", "/api/sessions", {
-        selectedChords: data.selectedChords,
-        chordSequence: chordSequence,
-        totalRounds: data.totalRounds,
-        currentRound: 1,
-        results: [],
-        isCompleted: false,
-      });
-      return response.json();
-    },
-    onSuccess: (session) => {
-      setLocation(`/practice/${session.id}`);
-    },
-    onError: () => {
-      toast({
-        title: "エラー",
-        description: "セッションの作成に失敗しました",
-        variant: "destructive",
-      });
-    },
-  });
+  const [isStarting, setIsStarting] = useState(false);
 
   const toggleChordSelection = (chordName: string) => {
     setSelectedChords(prev => {
@@ -126,10 +100,14 @@ export default function Home() {
     // Save audio setting to pass to practice session
     localStorage.setItem("audioEnabled", JSON.stringify(audioEnabled));
 
-    createSessionMutation.mutate({
+    setIsStarting(true);
+    const chordSequence = generateBalancedChordSequence(selectedChords, selectedRounds);
+    const session = createSession({
       selectedChords,
+      chordSequence,
       totalRounds: selectedRounds,
     });
+    setLocation(`/practice/${session.id}`);
   };
 
   return (
@@ -225,10 +203,10 @@ export default function Home() {
           <div className="mb-8">
             <Button 
               onClick={startTraining}
-              disabled={createSessionMutation.isPending}
+              disabled={isStarting}
               className="w-full bg-gray-900 hover:bg-gray-800 text-white font-bold py-9 px-6 rounded-lg text-xl transition-colors tracking-wider"
             >
-              {createSessionMutation.isPending ? "準備中..." : "トレーニング開始"}
+              {isStarting ? "準備中..." : "トレーニング開始"}
             </Button>
           </div>
         </div>
